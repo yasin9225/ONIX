@@ -1,0 +1,2537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onix Platform - Secure Crypto Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Header */
+        .header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: #6c5ce7;
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #6c5ce7;
+        }
+
+        .btn-login {
+            background-color: #6c5ce7;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            color: #6c5ce7;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #6c5ce7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a4bd1;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #6c5ce7;
+            border: 2px solid #6c5ce7;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6c5ce7;
+            color: white;
+        }
+
+        .hero-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Features Section */
+        .features, .services {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .features h2, .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1a1a2e;
+        }
+
+        .features-container, .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card, .service-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover, .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #6c5ce7;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3, .service-card h3 {
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+
+        .service-card h3 i {
+            color: #6c5ce7;
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo i {
+            color: #6c5ce7;
+            margin-right: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: #6c5ce7;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Auth Pages */
+        .auth-page {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .auth-header p {
+            color: #aaa;
+        }
+
+        .auth-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i:first-of-type {
+            position: absolute;
+            left: 15px;
+            color: #888;
+        }
+
+        .input-with-icon .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+        }
+
+        .form-info {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: #6c5ce7;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .auth-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: #6c5ce7;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .auth-links a {
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        /* Dashboard Layout */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #1a1a2e;
+            color: white;
+            padding: 1.5rem 0;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid #2d3047;
+        }
+
+        .user-info {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #2d3047;
+        }
+
+        .avatar {
+            font-size: 2.5rem;
+            color: #6c5ce7;
+        }
+
+        .user-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 1.5rem;
+            color: #ddd;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: #2d3047;
+            color: white;
+            border-left: 4px solid #6c5ce7;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .topbar {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .topbar-left h1 {
+            font-size: 1.8rem;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .topbar-left p {
+            color: #666;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notifications {
+            position: relative;
+            font-size: 1.3rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #6c5ce7;
+            margin-right: 1.5rem;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(108, 92, 231, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-info h3 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change .fa-arrow-up {
+            color: #2ecc71;
+        }
+
+        .stat-change .fa-arrow-down {
+            color: #e74c3c;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .quick-actions h2 {
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+
+        .actions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+            cursor: pointer;
+            display: block;
+        }
+
+        .action-card:hover {
+            background-color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #6c5ce7;
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            color: #6c5ce7;
+            margin-bottom: 1rem;
+        }
+
+        .action-card h4 {
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+        }
+
+        .action-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .recent-activity h2 {
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+
+        .activity-table {
+            overflow-x: auto;
+        }
+
+        .activity-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .activity-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+
+        .activity-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-type {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .activity-type.swap {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .activity-type.convert {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        .activity-type.trade {
+            background-color: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.completed {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        .status.pending {
+            background-color: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        /* Coin Cards */
+        .coins-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .coin-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .coin-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .coin-icon {
+            font-size: 2rem;
+            color: #f1c40f;
+            margin-right: 1rem;
+        }
+
+        .coin-name h3 {
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .coin-symbol {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .coin-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+        }
+
+        .coin-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .coin-change.positive {
+            color: #2ecc71;
+        }
+
+        .coin-change.negative {
+            color: #e74c3c;
+        }
+
+        .coin-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .coin-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .coin-detail:last-child {
+            border-bottom: none;
+        }
+
+        .coin-detail span:first-child {
+            color: #666;
+        }
+
+        .coin-detail span:last-child {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        /* Forms */
+        .operation-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .operation-container h2 {
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        /* Wallet specific */
+        .wallet-balance {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-top: 10px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .swap-arrow {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            color: #6c5ce7;
+        }
+
+        .swap-info {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .swap-info p {
+            margin: 5px 0;
+        }
+
+        /* Profile */
+        .profile-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-avatar {
+            font-size: 4rem;
+            color: #6c5ce7;
+            margin-right: 1.5rem;
+        }
+
+        .profile-info h2 {
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #666;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .profile-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .profile-section h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Trade disabled note */
+        .trade-note {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar .logo span,
+            .sidebar .user-details,
+            .sidebar-nav a span {
+                display: none;
+            }
+
+            .sidebar-header, .user-info {
+                padding: 1rem;
+                justify-content: center;
+            }
+
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .avatar {
+                font-size: 2rem;
+            }
+
+            .sidebar-nav a {
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .sidebar-nav a i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .features h2, .services h2 {
+                font-size: 2rem;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .topbar-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Pages Container -->
+    <div id="pagesContainer">
+        <!-- Home Page -->
+        <div id="homePage" class="page">
+            <header class="header">
+                <nav class="navbar">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a onclick="showPage('homePage')">Home</a></li>
+                        <li><a onclick="scrollToSection('features')">Features</a></li>
+                        <li><a onclick="scrollToSection('services')">Services</a></li>
+                        <li><a onclick="showPage('coinsPage')">Coins</a></li>
+                        <li><a onclick="showPage('loginPage')" class="btn-login">Login</a></li>
+                    </ul>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </header>
+
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to <span class="highlight">Onix Platform</span></h1>
+                    <p>The most secure and integrated platform for crypto trading, swapping, and conversions</p>
+                    <div class="hero-buttons">
+                        <button onclick="showPage('loginPage')" class="btn-primary">Get Started</button>
+                        <button onclick="scrollToSection('features')" class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #6c5ce7, #a29bfe); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                        <i class="fas fa-chart-line" style="font-size: 4rem; margin-right: 20px;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 10px;">Live Trading</h3>
+                            <p>Real-time crypto data</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features" id="features">
+                <h2>Platform Features</h2>
+                <div class="features-container">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Swap</h3>
+                        <p>Instant token swapping with minimal fees across multiple networks</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3>Convert</h3>
+                        <p>Convert between cryptocurrencies and fiat currencies seamlessly</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Trade</h3>
+                        <p>Advanced trading tools with real-time charts and analytics</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>Wallet</h3>
+                        <p>Secure multi-chain wallet supporting all major cryptocurrencies</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="services" id="services">
+                <h2>Our Services</h2>
+                <div class="services-container">
+                    <div class="service-card">
+                        <h3><i class="fas fa-shield-alt"></i> Secure Login</h3>
+                        <p>Username and password protected access with 2FA option</p>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-link"></i> Wallet Integration</h3>
+                        <p>Connect your wallet to start trading, swapping and converting</p>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-network-wired"></i> Multi-Network</h3>
+                        <p>Support for Ethereum, Binance Smart Chain, Polygon, and more</p>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-bolt"></i> Fast Transactions</h3>
+                        <p>Quick processing with real-time status tracking</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                    <div class="footer-links">
+                        <a onclick="showPage('homePage')">Home</a>
+                        <a onclick="scrollToSection('features')">Features</a>
+                        <a onclick="scrollToSection('services')">Services</a>
+                        <a onclick="showPage('coinsPage')">Coins</a>
+                        <a onclick="showPage('loginPage')">Login</a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2023 Onix Platform. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page hidden">
+            <div class="auth-page">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <div class="logo" onclick="showPage('homePage')">
+                            <i class="fas fa-gem"></i>
+                            <span>ONIX</span>
+                        </div>
+                        <h2>Welcome Back</h2>
+                        <p>Please enter your credentials to access the platform</p>
+                    </div>
+
+                    <div class="auth-card">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="remember">
+                                    <span>Remember me</span>
+                                </label>
+                                <a class="forgot-password">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-block">Login</button>
+
+                            <div class="auth-footer">
+                                <p>Don't have an account? <a id="registerLink">Contact administrator</a></p>
+                                <p class="note">Access is restricted to authorized users only.</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="auth-links">
+                        <a onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page hidden">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUser">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')" class="active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Header -->
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Dashboard</h1>
+                        <p>Welcome to your Onix control panel</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </div>
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDate">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <!-- Stats Cards -->
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Balance</h3>
+                                <p class="stat-value">$24,580.75</p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 12.5%</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Swaps Today</h3>
+                                <p class="stat-value">47</p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 8.2%</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Conversions</h3>
+                                <p class="stat-value">23</p>
+                                <p class="stat-change"><i class="fas fa-arrow-down"></i> 3.1%</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Trades</h3>
+                                <p class="stat-value">156</p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 18.7%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h2>Quick Actions</h2>
+                        <div class="actions-container">
+                            <a onclick="showPage('swapPage')" class="action-card">
+                                <div class="action-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <h4>Swap Tokens</h4>
+                                <p>Exchange crypto instantly (UI demo)</p>
+                            </a>
+
+                            <a onclick="showPage('convertPage')" class="action-card">
+                                <div class="action-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <h4>Convert</h4>
+                                <p>Crypto to fiat conversion (UI demo)</p>
+                            </a>
+
+                            <a onclick="showPage('tradePage')" class="action-card">
+                                <div class="action-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4>Trade</h4>
+                                <p>Coming soon – under development</p>
+                            </a>
+
+                            <a onclick="showPage('walletPage')" class="action-card">
+                                <div class="action-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <h4>Wallet</h4>
+                                <p>Connect your Web3 wallets</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="recent-activity">
+                        <h2>Recent Activity</h2>
+                        <div class="activity-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="activity-type swap">Swap</span></td>
+                                        <td>ETH to BTC</td>
+                                        <td>0.5 ETH</td>
+                                        <td><span class="status completed">Completed</span></td>
+                                        <td>10:24 AM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="activity-type convert">Convert</span></td>
+                                        <td>BTC to USD</td>
+                                        <td>$1,250.00</td>
+                                        <td><span class="status completed">Completed</span></td>
+                                        <td>09:15 AM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="activity-type trade">Trade</span></td>
+                                        <td>Buy BNB</td>
+                                        <td>15 BNB</td>
+                                        <td><span class="status pending">Pending</span></td>
+                                        <td>08:42 AM</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="activity-type swap">Swap</span></td>
+                                        <td>USDT to SOL</td>
+                                        <td>500 USDT</td>
+                                        <td><span class="status completed">Completed</span></td>
+                                        <td>Yesterday</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="activity-type convert">Convert</span></td>
+                                        <td>EUR to ETH</td>
+                                        <td>0.25 ETH</td>
+                                        <td><span class="status completed">Completed</span></td>
+                                        <td>Yesterday</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wallet Page -->
+        <div id="walletPage" class="page hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUserWallet">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')" class="active">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtnWallet">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Wallet</h1>
+                        <p>Connect and manage your crypto wallets</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">2</span>
+                        </div>
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDateWallet">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="dashboard-content">
+                    <div class="operation-container">
+                        <h2>Connect Your Wallet</h2>
+                        <div class="form-group">
+                            <label>Select Wallet Type</label>
+                            <select id="walletType" class="form-select">
+                                <option value="evm">Web3 EVM Wallet (MetaMask / Trust / Coinbase)</option>
+                                <option value="phantom">Phantom (Solana)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Wallet Address</label>
+                            <input type="text" id="walletAddressInput" placeholder="0x... (will be filled automatically after connect)" class="form-control" readonly>
+                        </div>
+
+                        <button id="connectWalletBtn" class="btn-primary btn-block">
+                            <i class="fas fa-plug"></i> Connect Wallet
+                        </button>
+                        <p id="walletStatus" class="form-info" style="margin-top:10px;"></p>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h2>Connected Wallets (Demo)</h2>
+                        <div class="actions-container">
+                            <div class="action-card">
+                                <div class="action-icon">
+                                    <i class="fab fa-ethereum"></i>
+                                </div>
+                                <h4>Ethereum</h4>
+                                <p>0x1a2b...3c4d</p>
+                                <p class="wallet-balance">2.5 ETH</p>
+                            </div>
+
+                            <div class="action-card">
+                                <div class="action-icon">
+                                    <i class="fab fa-bitcoin"></i>
+                                </div>
+                                <h4>Bitcoin</h4>
+                                <p>bc1qxy...kg7g</p>
+                                <p class="wallet-balance">0.15 BTC</p>
+                            </div>
+
+                            <div class="action-card">
+                                <div class="action-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <h4>Binance Chain</h4>
+                                <p>bnb1...xyz</p>
+                                <p class="wallet-balance">150 BNB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swap Page -->
+        <div id="swapPage" class="page hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUserSwap">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')" class="active">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtnSwap">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Swap Tokens</h1>
+                        <p>Exchange cryptocurrencies instantly (UI demo – execution via wallet)</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">1</span>
+                        </div>
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDateSwap">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="dashboard-content">
+                    <div class="operation-container">
+                        <h2>Swap Tokens</h2>
+                        <form id="swapForm">
+                            <div class="form-group">
+                                <label>From</label>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <input type="number" id="swapFromAmount" placeholder="Amount" class="form-control" required>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <select id="swapFromToken" class="form-select">
+                                            <option>ETH</option>
+                                            <option>BTC</option>
+                                            <option>USDT</option>
+                                            <option>BNB</option>
+                                            <option>SOL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swap-arrow">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <label>To</label>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <input type="number" id="swapToAmount" placeholder="Amount (estimated)" class="form-control" required>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <select id="swapToToken" class="form-select">
+                                            <option>USDT</option>
+                                            <option>ETH</option>
+                                            <option>BTC</option>
+                                            <option>BNB</option>
+                                            <option>SOL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swap-info">
+                                <p>Exchange Rate (demo): 1 ETH = 2,980.30 USDT</p>
+                                <p>Estimated Fees (demo): $12.50</p>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-block">
+                                <i class="fas fa-exchange-alt"></i> Swap Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Convert Page -->
+        <div id="convertPage" class="page hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUserConvert">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')" class="active">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtnConvert">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Convert</h1>
+                        <p>Convert between crypto and fiat currencies (UI demo)</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">0</span>
+                        </div>
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDateConvert">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="dashboard-content">
+                    <div class="operation-container">
+                        <h2>Convert Currency</h2>
+                        <form id="convertForm">
+                            <div class="form-group">
+                                <label>From</label>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <input type="number" id="convertFromAmount" placeholder="Amount" class="form-control" required>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <select id="convertFromCurrency" class="form-select">
+                                            <option>BTC</option>
+                                            <option>ETH</option>
+                                            <option>USD</option>
+                                            <option>EUR</option>
+                                            <option>GBP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swap-arrow">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <label>To</label>
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 2;">
+                                        <input type="number" id="convertToAmount" placeholder="Amount (estimated)" class="form-control" required>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <select id="convertToCurrency" class="form-select">
+                                            <option>USD</option>
+                                            <option>EUR</option>
+                                            <option>GBP</option>
+                                            <option>BTC</option>
+                                            <option>ETH</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swap-info">
+                                <p>Exchange Rate (demo): 1 BTC = $43,250.75</p>
+                                <p>Estimated Fees (demo): $25.00</p>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-block">
+                                <i class="fas fa-sync-alt"></i> Convert Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trade Page -->
+        <div id="tradePage" class="page hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUserTrade">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')" class="active">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtnTrade">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Trade</h1>
+                        <p>Advanced crypto trading (feature under development)</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">5</span>
+                        </div>
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDateTrade">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="dashboard-content">
+                    <div class="operation-container">
+                        <div class="trade-note">
+                            Trading is currently disabled on this demo. This section is under development and will be activated later.
+                        </div>
+                        <h2>Place Trade Order (Disabled)</h2>
+                        <form id="tradeForm">
+                            <div class="form-group">
+                                <label>Order Type</label>
+                                <select class="form-select" disabled>
+                                    <option>Market Order</option>
+                                    <option>Limit Order</option>
+                                    <option>Stop Loss</option>
+                                    <option>Take Profit</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Asset</label>
+                                <select class="form-select" disabled>
+                                    <option>BTC/USDT</option>
+                                    <option>ETH/USDT</option>
+                                    <option>BNB/USDT</option>
+                                    <option>SOL/USDT</option>
+                                    <option>ADA/USDT</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Side</label>
+                                <div style="display: flex; gap: 1rem;">
+                                    <label class="checkbox">
+                                        <input type="radio" name="side" value="buy" disabled checked>
+                                        <span>Buy</span>
+                                    </label>
+                                    <label class="checkbox">
+                                        <input type="radio" name="side" value="sell" disabled>
+                                        <span>Sell</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="number" placeholder="0.00" class="form-control" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Price (for limit orders)</label>
+                                <input type="number" placeholder="Optional" class="form-control" disabled>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-block" disabled>
+                                <i class="fas fa-chart-line"></i> Place Order
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coins Page -->
+        <div id="coinsPage" class="page hidden">
+            <header class="header">
+                <nav class="navbar">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a onclick="showPage('homePage')">Home</a></li>
+                        <li><a onclick="showPage('loginPage')">Login</a></li>
+                        <li><a onclick="showPage('dashboardPage')">Dashboard</a></li>
+                    </ul>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="dashboard-content" style="margin-left: 0; padding-top: 2rem;">
+                <div class="topbar">
+                    <div class="topbar-left">
+                        <h1>Crypto Coins</h1>
+                        <p>Real-time cryptocurrency information (static demo data)</p>
+                    </div>
+                </div>
+
+                <div class="coins-container" id="coinsContainer">
+                    <!-- Coins will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo" onclick="showPage('homePage')">
+                        <i class="fas fa-gem"></i>
+                        <span>ONIX</span>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h4 id="loggedInUserProfile">onixuser</h4>
+                        <p>Premium Member</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a onclick="showPage('dashboardPage')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a onclick="showPage('walletPage')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                    <a onclick="showPage('swapPage')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Swap</span>
+                    </a>
+                    <a onclick="showPage('convertPage')">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Convert</span>
+                    </a>
+                    <a onclick="showPage('tradePage')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Trade</span>
+                    </a>
+                    <a onclick="showPage('coinsPage')">
+                        <i class="fas fa-coins"></i>
+                        <span>Coins</span>
+                    </a>
+                    <a onclick="showPage('profilePage')" class="active">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a id="logoutBtnProfile">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <h1>Profile</h1>
+                        <p>Manage your account settings</p>
+                    </div>
+                    <div class="topbar-right">
+                        <div class="date-display">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="currentDateProfile">Loading...</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2>onixuser</h2>
+                            <p>Premium Member since December 2023</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="profile-section">
+                            <h3>Account Information</h3>
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" value="onixuser" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="user@onixplatform.com" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" value="+1 234 567 8900" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3>Security</h3>
+                            <div class="form-group">
+                                <label>Two-Factor Authentication</label>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span>Enabled</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>Change Password</label>
+                                <input type="password" placeholder="New password" class="form-control">
+                            </div>
+                            <button class="btn-primary" style="margin-top: 1rem;">Update Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let isLoggedIn = false;
+
+        // Strong credentials (frontend-level only)
+        const validUsername = 'admin_master_9281';
+        const validPassword = 'Xv9!eP@73Qz#LmA2rT';
+
+        // Coin data
+        const coinData = [
+            {
+                name: 'Bitcoin',
+                symbol: 'BTC',
+                price: '$43,250.75',
+                change: '+2.5%',
+                changeType: 'positive',
+                marketCap: '$845.2B',
+                volume: '$32.5B',
+                supply: '19.5M BTC'
+            },
+            {
+                name: 'Ethereum',
+                symbol: 'ETH',
+                price: '$2,980.30',
+                change: '+1.8%',
+                changeType: 'positive',
+                marketCap: '$358.4B',
+                volume: '$18.7B',
+                supply: '120.2M ETH'
+            },
+            {
+                name: 'Binance Coin',
+                symbol: 'BNB',
+                price: '$305.75',
+                change: '-0.5%',
+                changeType: 'negative',
+                marketCap: '$47.2B',
+                volume: '$1.2B',
+                supply: '154.5M BNB'
+            },
+            {
+                name: 'Cardano',
+                symbol: 'ADA',
+                price: '$0.52',
+                change: '+5.2%',
+                changeType: 'positive',
+                marketCap: '$18.5B',
+                volume: '$450M',
+                supply: '35.6B ADA'
+            },
+            {
+                name: 'Solana',
+                symbol: 'SOL',
+                price: '$102.40',
+                change: '+3.7%',
+                changeType: 'positive',
+                marketCap: '$44.8B',
+                volume: '$2.1B',
+                supply: '437.6M SOL'
+            },
+            {
+                name: 'Polkadot',
+                symbol: 'DOT',
+                price: '$7.25',
+                change: '-1.2%',
+                changeType: 'negative',
+                marketCap: '$9.3B',
+                volume: '$280M',
+                supply: '1.28B DOT'
+            },
+            {
+                name: 'Dogecoin',
+                symbol: 'DOGE',
+                price: '$0.078',
+                change: '+8.5%',
+                changeType: 'positive',
+                marketCap: '$11.2B',
+                volume: '$650M',
+                supply: '143.3B DOGE'
+            },
+            {
+                name: 'Polygon',
+                symbol: 'MATIC',
+                price: '$0.85',
+                change: '+0.9%',
+                changeType: 'positive',
+                marketCap: '$8.3B',
+                volume: '$320M',
+                supply: '9.8B MATIC'
+            }
+        ];
+
+        // Page navigation functions
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Show requested page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+
+                // Check authentication for protected pages
+                const protectedPages = ['dashboardPage', 'walletPage', 'swapPage', 'convertPage', 'tradePage', 'profilePage'];
+                if (protectedPages.includes(pageId) && !isLoggedIn) {
+                    showPage('loginPage');
+                    return;
+                }
+
+                // Update user info on all pages
+                updateUserInfo();
+
+                // Update date on all pages
+                updateDates();
+
+                // Load coins if on coins page
+                if (pageId === 'coinsPage') {
+                    loadCoins();
+                }
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            showPage('homePage');
+            setTimeout(() => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function updateUserInfo() {
+            const username = localStorage.getItem('onixUsername') || 'onixuser';
+            const userElements = document.querySelectorAll('[id^="loggedInUser"]');
+            userElements.forEach(el => {
+                el.textContent = username;
+            });
+        }
+
+        function updateDates() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-US', options);
+
+            const dateElements = document.querySelectorAll('[id^="currentDate"]');
+            dateElements.forEach(el => {
+                el.textContent = dateString;
+            });
+        }
+
+        function loadCoins() {
+            const container = document.getElementById('coinsContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            coinData.forEach(coin => {
+                const coinCard = document.createElement('div');
+                coinCard.className = 'coin-card';
+
+                coinCard.innerHTML = `
+                    <div class="coin-header">
+                        <div class="coin-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="coin-name">
+                            <h3>${coin.name}</h3>
+                            <span class="coin-symbol">${coin.symbol}</span>
+                        </div>
+                    </div>
+                    <div class="coin-price">${coin.price}</div>
+                    <div class="coin-change ${coin.changeType}">
+                        <i class="fas fa-${coin.changeType === 'positive' ? 'arrow-up' : 'arrow-down'}"></i>
+                        <span>${coin.change}</span>
+                    </div>
+                    <div class="coin-details">
+                        <div class="coin-detail">
+                            <span>Market Cap</span>
+                            <span>${coin.marketCap}</span>
+                        </div>
+                        <div class="coin-detail">
+                            <span>24h Volume</span>
+                            <span>${coin.volume}</span>
+                        </div>
+                        <div class="coin-detail">
+                            <span>Circulating Supply</span>
+                            <span>${coin.supply}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(coinCard);
+            });
+        }
+
+        // Wallet connect logic
+        async function connectEvmWallet() {
+            const statusEl = document.getElementById('walletStatus');
+            const addrInput = document.getElementById('walletAddressInput');
+
+            if (!window.ethereum) {
+                statusEl.textContent = 'No Web3 wallet detected. Please install MetaMask or use a Web3-enabled browser/wallet.';
+                return;
+            }
+
+            try {
+                statusEl.textContent = 'Requesting wallet connection...';
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const address = accounts[0];
+                addrInput.value = address;
+                statusEl.textContent = 'Connected to wallet: ' + address;
+            } catch (err) {
+                console.error(err);
+                statusEl.textContent = 'Wallet connection rejected or failed.';
+            }
+        }
+
+        async function connectPhantomWallet() {
+            const statusEl = document.getElementById('walletStatus');
+            const addrInput = document.getElementById('walletAddressInput');
+
+            const provider = window.solana;
+            if (!provider || !provider.isPhantom) {
+                statusEl.textContent = 'Phantom wallet not detected. Please install Phantom extension.';
+                return;
+            }
+
+            try {
+                statusEl.textContent = 'Requesting Phantom connection...';
+                const resp = await provider.connect();
+                addrInput.value = resp.publicKey.toString();
+                statusEl.textContent = 'Connected to Phantom: ' + resp.publicKey.toString();
+            } catch (err) {
+                console.error(err);
+                statusEl.textContent = 'Phantom connection rejected or failed.';
+            }
+        }
+
+        async function connectWallet() {
+            const walletType = document.getElementById('walletType').value;
+            if (walletType === 'evm') {
+                await connectEvmWallet();
+            } else if (walletType === 'phantom') {
+                await connectPhantomWallet();
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login status
+            const savedLogin = localStorage.getItem('onixLoggedIn');
+            isLoggedIn = savedLogin === 'true';
+
+            // Show home page by default
+            showPage('homePage');
+
+            // Set up login form
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const username = document.getElementById('username').value.trim();
+                    const password = document.getElementById('password').value;
+
+                    if (username === validUsername && password === validPassword) {
+                        isLoggedIn = true;
+                        localStorage.setItem('onixLoggedIn', 'true');
+                        localStorage.setItem('onixUsername', username);
+
+                        alert('Login successful! Redirecting to dashboard...');
+                        showPage('dashboardPage');
+                    } else {
+                        alert('Invalid credentials. Please contact the platform administrator if you forgot your access data.');
+                    }
+                });
+
+                // Toggle password visibility
+                const togglePassword = document.getElementById('togglePassword');
+                if (togglePassword) {
+                    togglePassword.addEventListener('click', function() {
+                        const passwordInput = document.getElementById('password');
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        this.classList.toggle('fa-eye');
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+            }
+
+            // Set up logout buttons
+            const logoutButtons = document.querySelectorAll('[id^="logoutBtn"]');
+            logoutButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    isLoggedIn = false;
+                    localStorage.removeItem('onixLoggedIn');
+                    localStorage.removeItem('onixUsername');
+                    alert('You have been logged out.');
+                    showPage('homePage');
+                });
+            });
+
+            // Set up wallet connection
+            const connectWalletBtn = document.getElementById('connectWalletBtn');
+            if (connectWalletBtn) {
+                connectWalletBtn.addEventListener('click', function() {
+                    connectWallet();
+                });
+            }
+
+            // Set up forms
+            const swapForm = document.getElementById('swapForm');
+            if (swapForm) {
+                swapForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const fromAmount = document.getElementById('swapFromAmount').value;
+                    const fromToken = document.getElementById('swapFromToken').value;
+                    const toAmount = document.getElementById('swapToAmount').value;
+                    const toToken = document.getElementById('swapToToken').value;
+
+                    alert(
+                        'Swap (demo only):\n' +
+                        fromAmount + ' ' + fromToken + ' → ' +
+                        toAmount + ' ' + toToken +
+                        '\n\nIn a real integration, this step would open your wallet to sign the swap transaction.'
+                    );
+                });
+            }
+
+            const convertForm = document.getElementById('convertForm');
+            if (convertForm) {
+                convertForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const fromAmount = document.getElementById('convertFromAmount').value;
+                    const fromCurrency = document.getElementById('convertFromCurrency').value;
+                    const toAmount = document.getElementById('convertToAmount').value;
+                    const toCurrency = document.getElementById('convertToCurrency').value;
+
+                    alert(
+                        'Convert (demo only):\n' +
+                        fromAmount + ' ' + fromCurrency + ' → ' +
+                        toAmount + ' ' + toCurrency +
+                        '\n\nIn a real integration, this step would call an exchange API or open your wallet for confirmation.'
+                    );
+                });
+            }
+
+            const tradeForm = document.getElementById('tradeForm');
+            if (tradeForm) {
+                tradeForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Trading is currently disabled. This feature is under development.');
+                });
+            }
+
+            // Mobile menu toggle
+            const mobileMenu = document.querySelector('.mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function() {
+                    const navLinks = document.querySelector('.nav-links');
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+
+            // Update dates initially
+            updateDates();
+        });
+    </script>
+</body>
+</html>
