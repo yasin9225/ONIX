@@ -3,10 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onix Platform - Secure Crypto Trading</title>
+    <title>ONIX Trading Platform - Professional Crypto Exchange</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset and Base Styles */
+        /* Color System */
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5a4bd1;
+            --primary-light: #a29bfe;
+            --secondary: #1a1a2e;
+            --secondary-light: #2d3047;
+            --success: #2ecc71;
+            --success-dark: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f1c40f;
+            --info: #3498db;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #666;
+            --gray-light: #ddd;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -17,8 +38,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f8f9fa;
-            transition: all 0.3s;
+            background-color: var(--light);
+            overflow-x: hidden;
         }
 
         a {
@@ -26,16 +47,61 @@
             color: inherit;
         }
 
+        ul {
+            list-style: none;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
         .hidden {
             display: none !important;
         }
 
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--gray);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.success { background: var(--success); }
+        .notification.error { background: var(--danger); }
+        .notification.warning { background: var(--warning); color: #333; }
+        .notification.info { background: var(--info); }
+
         /* Header */
         .header {
-            background-color: #1a1a2e;
-            color: white;
+            background-color: var(--secondary);
+            color: var(--white);
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .navbar {
@@ -56,38 +122,39 @@
         }
 
         .logo i {
-            color: #6c5ce7;
+            color: var(--primary);
             margin-right: 10px;
             font-size: 2rem;
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
+            gap: 2rem;
         }
 
         .nav-links a {
-            color: #ddd;
+            color: var(--gray-light);
             font-weight: 500;
             transition: color 0.3s;
             cursor: pointer;
         }
 
         .nav-links a:hover {
-            color: #6c5ce7;
+            color: var(--primary);
         }
 
         .btn-login {
-            background-color: #6c5ce7;
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
             padding: 0.5rem 1.5rem;
             border-radius: 5px;
             font-weight: 600;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-dark);
         }
 
         .mobile-menu {
@@ -118,12 +185,12 @@
         }
 
         .highlight {
-            color: #6c5ce7;
+            color: var(--primary);
         }
 
         .hero p {
             font-size: 1.2rem;
-            color: #666;
+            color: var(--gray);
             margin-bottom: 2rem;
             max-width: 600px;
         }
@@ -145,37 +212,31 @@
         }
 
         .btn-primary {
-            background-color: #6c5ce7;
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
         }
 
         .btn-primary:hover {
-            background-color: #5a4bd1;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
         }
 
         .btn-secondary {
             background-color: transparent;
-            color: #6c5ce7;
-            border: 2px solid #6c5ce7;
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-secondary:hover {
-            background-color: #6c5ce7;
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
         }
 
         .hero-image {
             flex: 1;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
+            box-shadow: var(--shadow-dark);
         }
 
         /* Features Section */
@@ -189,7 +250,7 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         .features-container, .services-container {
@@ -199,39 +260,39 @@
         }
 
         .feature-card, .service-card {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
             text-align: center;
         }
 
         .feature-card:hover, .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-dark);
         }
 
         .feature-icon {
             font-size: 2.5rem;
-            color: #6c5ce7;
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
         .feature-card h3, .service-card h3 {
             margin-bottom: 1rem;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         .service-card h3 i {
-            color: #6c5ce7;
+            color: var(--primary);
             margin-right: 10px;
         }
 
         /* Footer */
         .footer {
-            background-color: #1a1a2e;
-            color: white;
+            background-color: var(--secondary);
+            color: var(--white);
             padding: 3rem 0;
             margin-top: 4rem;
         }
@@ -255,7 +316,7 @@
         }
 
         .footer-logo i {
-            color: #6c5ce7;
+            color: var(--primary);
             margin-right: 10px;
         }
 
@@ -268,23 +329,23 @@
         }
 
         .footer-links a {
-            color: #ddd;
+            color: var(--gray-light);
             transition: color 0.3s;
             cursor: pointer;
         }
 
         .footer-links a:hover {
-            color: #6c5ce7;
+            color: var(--primary);
         }
 
         .footer-copyright {
-            color: #888;
+            color: var(--gray);
             font-size: 0.9rem;
         }
 
         /* Auth Pages */
         .auth-page {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, #16213e 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -299,7 +360,7 @@
 
         .auth-header {
             text-align: center;
-            color: white;
+            color: var(--white);
             margin-bottom: 2rem;
         }
 
@@ -313,7 +374,7 @@
         }
 
         .auth-card {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 2.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -339,20 +400,20 @@
         .input-with-icon i:first-of-type {
             position: absolute;
             left: 15px;
-            color: #888;
+            color: var(--gray);
         }
 
         .input-with-icon .toggle-password {
             position: absolute;
             right: 15px;
             cursor: pointer;
-            color: #888;
+            color: var(--gray);
         }
 
         .input-with-icon input {
             width: 100%;
             padding: 12px 15px 12px 45px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--gray-light);
             border-radius: 5px;
             font-size: 1rem;
             transition: border-color 0.3s;
@@ -360,12 +421,12 @@
 
         .input-with-icon input:focus {
             outline: none;
-            border-color: #6c5ce7;
+            border-color: var(--primary);
         }
 
         .form-info {
             font-size: 0.85rem;
-            color: #666;
+            color: var(--gray);
             margin-top: 5px;
         }
 
@@ -387,7 +448,7 @@
         }
 
         .forgot-password {
-            color: #6c5ce7;
+            color: var(--primary);
             font-size: 0.9rem;
             cursor: pointer;
         }
@@ -401,12 +462,12 @@
         .auth-footer {
             margin-top: 1.5rem;
             text-align: center;
-            color: #666;
+            color: var(--gray);
             font-size: 0.9rem;
         }
 
         .auth-footer a {
-            color: #6c5ce7;
+            color: var(--primary);
             font-weight: 600;
             cursor: pointer;
         }
@@ -414,7 +475,7 @@
         .note {
             margin-top: 10px;
             font-size: 0.8rem;
-            color: #888;
+            color: var(--gray);
             font-style: italic;
         }
 
@@ -424,7 +485,7 @@
         }
 
         .auth-links a {
-            color: white;
+            color: var(--white);
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -438,15 +499,16 @@
             top: 0;
             height: 100vh;
             width: 250px;
-            background-color: #1a1a2e;
-            color: white;
+            background-color: var(--secondary);
+            color: var(--white);
             padding: 1.5rem 0;
             z-index: 100;
+            overflow-y: auto;
         }
 
         .sidebar-header {
             padding: 0 1.5rem 2rem;
-            border-bottom: 1px solid #2d3047;
+            border-bottom: 1px solid var(--secondary-light);
         }
 
         .user-info {
@@ -454,12 +516,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            border-bottom: 1px solid #2d3047;
+            border-bottom: 1px solid var(--secondary-light);
         }
 
         .avatar {
             font-size: 2.5rem;
-            color: #6c5ce7;
+            color: var(--primary);
         }
 
         .user-details h4 {
@@ -480,7 +542,7 @@
             display: flex;
             align-items: center;
             padding: 12px 1.5rem;
-            color: #ddd;
+            color: var(--gray-light);
             transition: all 0.3s;
             cursor: pointer;
         }
@@ -491,34 +553,34 @@
         }
 
         .sidebar-nav a:hover, .sidebar-nav a.active {
-            background-color: #2d3047;
-            color: white;
-            border-left: 4px solid #6c5ce7;
+            background-color: var(--secondary-light);
+            color: var(--white);
+            border-left: 4px solid var(--primary);
         }
 
         .main-content {
             margin-left: 250px;
             min-height: 100vh;
-            background-color: #f8f9fa;
+            background-color: var(--light);
         }
 
         .topbar {
-            background-color: white;
+            background-color: var(--white);
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         .topbar-left h1 {
             font-size: 1.8rem;
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 5px;
         }
 
         .topbar-left p {
-            color: #666;
+            color: var(--gray);
         }
 
         .topbar-right {
@@ -530,7 +592,7 @@
         .notifications {
             position: relative;
             font-size: 1.3rem;
-            color: #666;
+            color: var(--gray);
             cursor: pointer;
         }
 
@@ -538,8 +600,8 @@
             position: absolute;
             top: -5px;
             right: -5px;
-            background-color: #e74c3c;
-            color: white;
+            background-color: var(--danger);
+            color: var(--white);
             font-size: 0.7rem;
             width: 18px;
             height: 18px;
@@ -553,7 +615,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #666;
+            color: var(--gray);
         }
 
         .dashboard-content {
@@ -569,17 +631,17 @@
         }
 
         .stat-card {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 1.5rem;
             display: flex;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         .stat-icon {
             font-size: 2.5rem;
-            color: #6c5ce7;
+            color: var(--primary);
             margin-right: 1.5rem;
             width: 70px;
             height: 70px;
@@ -592,14 +654,14 @@
 
         .stat-info h3 {
             font-size: 1rem;
-            color: #666;
+            color: var(--gray);
             margin-bottom: 5px;
         }
 
         .stat-value {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 5px;
         }
 
@@ -611,25 +673,25 @@
         }
 
         .stat-change .fa-arrow-up {
-            color: #2ecc71;
+            color: var(--success);
         }
 
         .stat-change .fa-arrow-down {
-            color: #e74c3c;
+            color: var(--danger);
         }
 
         /* Quick Actions */
         .quick-actions {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         .quick-actions h2 {
             margin-bottom: 1.5rem;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         .actions-container {
@@ -639,50 +701,50 @@
         }
 
         .action-card {
-            background-color: #f8f9fa;
+            background-color: var(--light);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
             transition: all 0.3s;
-            border: 1px solid #eee;
+            border: 1px solid var(--gray-light);
             cursor: pointer;
             display: block;
         }
 
         .action-card:hover {
-            background-color: white;
+            background-color: var(--white);
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            border-color: #6c5ce7;
+            border-color: var(--primary);
         }
 
         .action-icon {
             font-size: 2rem;
-            color: #6c5ce7;
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
         .action-card h4 {
             margin-bottom: 0.5rem;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         .action-card p {
-            color: #666;
+            color: var(--gray);
             font-size: 0.9rem;
         }
 
         /* Recent Activity */
         .recent-activity {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         .recent-activity h2 {
             margin-bottom: 1.5rem;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         .activity-table {
@@ -697,15 +759,15 @@
         .activity-table th {
             text-align: left;
             padding: 12px 15px;
-            background-color: #f8f9fa;
-            color: #666;
+            background-color: var(--light);
+            color: var(--gray);
             font-weight: 600;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid var(--gray-light);
         }
 
         .activity-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--gray-light);
         }
 
         .activity-type {
@@ -718,17 +780,27 @@
 
         .activity-type.swap {
             background-color: rgba(52, 152, 219, 0.1);
-            color: #3498db;
+            color: var(--info);
         }
 
         .activity-type.convert {
             background-color: rgba(46, 204, 113, 0.1);
-            color: #2ecc71;
+            color: var(--success);
         }
 
         .activity-type.trade {
             background-color: rgba(155, 89, 182, 0.1);
             color: #9b59b6;
+        }
+
+        .activity-type.deposit {
+            background-color: rgba(241, 196, 15, 0.1);
+            color: var(--warning);
+        }
+
+        .activity-type.withdraw {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
         }
 
         .status {
@@ -741,12 +813,17 @@
 
         .status.completed {
             background-color: rgba(46, 204, 113, 0.1);
-            color: #2ecc71;
+            color: var(--success);
         }
 
         .status.pending {
             background-color: rgba(241, 196, 15, 0.1);
-            color: #f1c40f;
+            color: var(--warning);
+        }
+
+        .status.failed {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
         }
 
         /* Coin Cards */
@@ -758,10 +835,10 @@
         }
 
         .coin-card {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         .coin-header {
@@ -772,24 +849,24 @@
 
         .coin-icon {
             font-size: 2rem;
-            color: #f1c40f;
+            color: var(--warning);
             margin-right: 1rem;
         }
 
         .coin-name h3 {
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 5px;
         }
 
         .coin-symbol {
-            color: #666;
+            color: var(--gray);
             font-size: 0.9rem;
         }
 
         .coin-price {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 1rem;
         }
 
@@ -801,11 +878,11 @@
         }
 
         .coin-change.positive {
-            color: #2ecc71;
+            color: var(--success);
         }
 
         .coin-change.negative {
-            color: #e74c3c;
+            color: var(--danger);
         }
 
         .coin-details {
@@ -819,7 +896,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--gray-light);
         }
 
         .coin-detail:last-child {
@@ -827,27 +904,27 @@
         }
 
         .coin-detail span:first-child {
-            color: #666;
+            color: var(--gray);
         }
 
         .coin-detail span:last-child {
             font-weight: 600;
-            color: #1a1a2e;
+            color: var(--dark);
         }
 
         /* Forms */
         .operation-container {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
             max-width: 500px;
             margin: 2rem auto;
         }
 
         .operation-container h2 {
             margin-bottom: 1.5rem;
-            color: #1a1a2e;
+            color: var(--dark);
             text-align: center;
         }
 
@@ -869,35 +946,35 @@
         }
 
         .btn-success {
-            background-color: #2ecc71;
-            color: white;
+            background-color: var(--success);
+            color: var(--white);
         }
 
         .btn-success:hover {
-            background-color: #27ae60;
+            background-color: var(--success-dark);
         }
 
         /* Wallet specific */
         .wallet-balance {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #2ecc71;
+            color: var(--success);
             margin-top: 10px;
         }
 
         .form-select {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--gray-light);
             border-radius: 5px;
             font-size: 1rem;
-            background-color: white;
+            background-color: var(--white);
         }
 
         .form-control {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--gray-light);
             border-radius: 5px;
             font-size: 1rem;
         }
@@ -906,11 +983,11 @@
             text-align: center;
             margin: 1rem 0;
             font-size: 1.5rem;
-            color: #6c5ce7;
+            color: var(--primary);
         }
 
         .swap-info {
-            background-color: #f8f9fa;
+            background-color: var(--light);
             padding: 1rem;
             border-radius: 5px;
             margin: 1rem 0;
@@ -923,10 +1000,10 @@
 
         /* Profile */
         .profile-container {
-            background-color: white;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
             max-width: 800px;
             margin: 2rem auto;
         }
@@ -936,22 +1013,22 @@
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--gray-light);
         }
 
         .profile-avatar {
             font-size: 4rem;
-            color: #6c5ce7;
+            color: var(--primary);
             margin-right: 1.5rem;
         }
 
         .profile-info h2 {
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 5px;
         }
 
         .profile-info p {
-            color: #666;
+            color: var(--gray);
         }
 
         .profile-details {
@@ -961,79 +1038,121 @@
         }
 
         .profile-section {
-            background-color: #f8f9fa;
+            background-color: var(--light);
             border-radius: 10px;
             padding: 1.5rem;
         }
 
         .profile-section h3 {
-            color: #1a1a2e;
+            color: var(--dark);
             margin-bottom: 1rem;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--gray-light);
         }
 
-        /* Trade disabled note */
-        .trade-note {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            border-radius: 5px;
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
+        /* Live Trading Indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
         }
 
-        /* Responsive */
+        .live-indicator::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Price Ticker */
+        .price-ticker {
+            background: var(--secondary);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticker-content {
+            display: flex;
+            gap: 30px;
+            animation: ticker 30s linear infinite;
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Responsive Design */
         @media (max-width: 992px) {
             .hero {
                 flex-direction: column;
                 text-align: center;
             }
-
+            
             .hero-content {
                 text-align: center;
             }
-
+            
             .hero-buttons {
                 justify-content: center;
             }
-
+            
             .sidebar {
                 width: 70px;
             }
-
+            
             .sidebar .logo span,
             .sidebar .user-details,
             .sidebar-nav a span {
                 display: none;
             }
-
+            
             .sidebar-header, .user-info {
                 padding: 1rem;
                 justify-content: center;
             }
-
+            
             .user-info {
                 flex-direction: column;
                 text-align: center;
             }
-
+            
             .avatar {
                 font-size: 2rem;
             }
-
+            
             .sidebar-nav a {
                 justify-content: center;
                 padding: 15px;
             }
-
+            
             .sidebar-nav a i {
                 margin-right: 0;
                 font-size: 1.2rem;
             }
-
+            
             .main-content {
                 margin-left: 70px;
             }
@@ -1043,50 +1162,195 @@
             .nav-links {
                 display: none;
             }
-
+            
             .mobile-menu {
                 display: block;
             }
-
+            
             .hero h1 {
                 font-size: 2.2rem;
             }
-
+            
             .features h2, .services h2 {
                 font-size: 2rem;
             }
-
+            
             .topbar {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
             }
-
+            
             .topbar-right {
                 width: 100%;
                 justify-content: space-between;
             }
-
+            
             .stats-cards {
                 grid-template-columns: 1fr;
             }
-
+            
             .actions-container {
                 grid-template-columns: 1fr;
             }
-
+            
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
         }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .operation-container {
+                padding: 1.5rem;
+            }
+            
+            .dashboard-content {
+                padding: 1rem;
+            }
+            
+            .auth-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Transaction History */
+        .transaction-history {
+            margin-top: 2rem;
+        }
+
+        .transaction-item {
+            background: var(--white);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaction-item.success {
+            border-left-color: var(--success);
+        }
+
+        .transaction-item.failed {
+            border-left-color: var(--danger);
+        }
+
+        .transaction-item.pending {
+            border-left-color: var(--warning);
+        }
+
+        /* Balance Cards */
+        .balance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .balance-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .balance-card .currency {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .balance-card .amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        /* Settings Page */
+        .settings-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .settings-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        /* Confirmation Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
     </style>
 </head>
 <body>
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
     <!-- Main Pages Container -->
     <div id="pagesContainer">
         <!-- Home Page -->
         <div id="homePage" class="page">
+            <!-- Same as original home page -->
+            <!-- Header -->
             <header class="header">
                 <nav class="navbar">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1106,6 +1370,7 @@
                 </nav>
             </header>
 
+            <!-- Hero Section -->
             <section class="hero">
                 <div class="hero-content">
                     <h1>Welcome to <span class="highlight">Onix Platform</span></h1>
@@ -1116,7 +1381,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #6c5ce7, #a29bfe); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
                         <i class="fas fa-chart-line" style="font-size: 4rem; margin-right: 20px;"></i>
                         <div>
                             <h3 style="margin-bottom: 10px;">Live Trading</h3>
@@ -1126,6 +1391,7 @@
                 </div>
             </section>
 
+            <!-- Features Section -->
             <section class="features" id="features">
                 <h2>Platform Features</h2>
                 <div class="features-container">
@@ -1160,6 +1426,7 @@
                 </div>
             </section>
 
+            <!-- Services Section -->
             <section class="services" id="services">
                 <h2>Our Services</h2>
                 <div class="services-container">
@@ -1182,6 +1449,7 @@
                 </div>
             </section>
 
+            <!-- Footer -->
             <footer class="footer">
                 <div class="footer-content">
                     <div class="footer-logo">
@@ -1214,7 +1482,7 @@
                         <h2>Welcome Back</h2>
                         <p>Please enter your credentials to access the platform</p>
                     </div>
-
+                    
                     <div class="auth-card">
                         <form id="loginForm">
                             <div class="form-group">
@@ -1224,7 +1492,7 @@
                                     <input type="text" id="username" name="username" placeholder="Enter your username" required>
                                 </div>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <div class="input-with-icon">
@@ -1233,7 +1501,7 @@
                                     <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                 </div>
                             </div>
-
+                            
                             <div class="form-options">
                                 <label class="checkbox">
                                     <input type="checkbox" name="remember">
@@ -1241,16 +1509,16 @@
                                 </label>
                                 <a class="forgot-password">Forgot password?</a>
                             </div>
-
+                            
                             <button type="submit" class="btn-primary btn-block">Login</button>
-
+                            
                             <div class="auth-footer">
                                 <p>Don't have an account? <a id="registerLink">Contact administrator</a></p>
                                 <p class="note">Access is restricted to authorized users only.</p>
                             </div>
                         </form>
                     </div>
-
+                    
                     <div class="auth-links">
                         <a onclick="showPage('homePage')"><i class="fas fa-arrow-left"></i> Back to Home</a>
                     </div>
@@ -1260,6 +1528,7 @@
 
         <!-- Dashboard Page -->
         <div id="dashboardPage" class="page hidden">
+            <!-- Same as original dashboard page -->
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-header">
@@ -1268,17 +1537,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUser">onixuser</h4>
+                        <h4 id="loggedInUser">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')" class="active">
                         <i class="fas fa-home"></i>
@@ -1314,7 +1583,7 @@
                     </a>
                 </nav>
             </div>
-
+            
             <!-- Main Content -->
             <div class="main-content">
                 <!-- Header -->
@@ -1334,7 +1603,7 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <!-- Dashboard Content -->
                 <div class="dashboard-content">
                     <!-- Stats Cards -->
@@ -1345,45 +1614,45 @@
                             </div>
                             <div class="stat-info">
                                 <h3>Balance</h3>
-                                <p class="stat-value">$24,580.75</p>
-                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 12.5%</p>
+                                <p class="stat-value">$<span id="totalBalance">0.00</span></p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> <span id="balanceChange">0%</span></p>
                             </div>
                         </div>
-
+                        
                         <div class="stat-card">
                             <div class="stat-icon">
                                 <i class="fas fa-exchange-alt"></i>
                             </div>
                             <div class="stat-info">
                                 <h3>Swaps Today</h3>
-                                <p class="stat-value">47</p>
-                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 8.2%</p>
+                                <p class="stat-value"><span id="swapsCount">0</span></p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> <span id="swapsChange">0%</span></p>
                             </div>
                         </div>
-
+                        
                         <div class="stat-card">
                             <div class="stat-icon">
                                 <i class="fas fa-sync-alt"></i>
                             </div>
                             <div class="stat-info">
                                 <h3>Conversions</h3>
-                                <p class="stat-value">23</p>
-                                <p class="stat-change"><i class="fas fa-arrow-down"></i> 3.1%</p>
+                                <p class="stat-value"><span id="conversionsCount">0</span></p>
+                                <p class="stat-change"><i class="fas fa-arrow-down"></i> <span id="conversionsChange">0%</span></p>
                             </div>
                         </div>
-
+                        
                         <div class="stat-card">
                             <div class="stat-icon">
                                 <i class="fas fa-chart-line"></i>
                             </div>
                             <div class="stat-info">
                                 <h3>Trades</h3>
-                                <p class="stat-value">156</p>
-                                <p class="stat-change"><i class="fas fa-arrow-up"></i> 18.7%</p>
+                                <p class="stat-value"><span id="tradesCount">0</span></p>
+                                <p class="stat-change"><i class="fas fa-arrow-up"></i> <span id="tradesChange">0%</span></p>
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Quick Actions -->
                     <div class="quick-actions">
                         <h2>Quick Actions</h2>
@@ -1393,35 +1662,35 @@
                                     <i class="fas fa-exchange-alt"></i>
                                 </div>
                                 <h4>Swap Tokens</h4>
-                                <p>Exchange crypto instantly (UI demo)</p>
+                                <p>Exchange crypto instantly</p>
                             </a>
-
+                            
                             <a onclick="showPage('convertPage')" class="action-card">
                                 <div class="action-icon">
                                     <i class="fas fa-sync-alt"></i>
                                 </div>
                                 <h4>Convert</h4>
-                                <p>Crypto to fiat conversion (UI demo)</p>
+                                <p>Crypto to fiat conversion</p>
                             </a>
-
+                            
                             <a onclick="showPage('tradePage')" class="action-card">
                                 <div class="action-icon">
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <h4>Trade</h4>
-                                <p>Coming soon – under development</p>
+                                <p>Advanced trading tools</p>
                             </a>
-
+                            
                             <a onclick="showPage('walletPage')" class="action-card">
                                 <div class="action-icon">
                                     <i class="fas fa-wallet"></i>
                                 </div>
                                 <h4>Wallet</h4>
-                                <p>Connect your Web3 wallets</p>
+                                <p>Manage your funds</p>
                             </a>
                         </div>
                     </div>
-
+                    
                     <!-- Recent Activity -->
                     <div class="recent-activity">
                         <h2>Recent Activity</h2>
@@ -1436,41 +1705,12 @@
                                         <th>Time</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span class="activity-type swap">Swap</span></td>
-                                        <td>ETH to BTC</td>
-                                        <td>0.5 ETH</td>
-                                        <td><span class="status completed">Completed</span></td>
-                                        <td>10:24 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="activity-type convert">Convert</span></td>
-                                        <td>BTC to USD</td>
-                                        <td>$1,250.00</td>
-                                        <td><span class="status completed">Completed</span></td>
-                                        <td>09:15 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="activity-type trade">Trade</span></td>
-                                        <td>Buy BNB</td>
-                                        <td>15 BNB</td>
-                                        <td><span class="status pending">Pending</span></td>
-                                        <td>08:42 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="activity-type swap">Swap</span></td>
-                                        <td>USDT to SOL</td>
-                                        <td>500 USDT</td>
-                                        <td><span class="status completed">Completed</span></td>
-                                        <td>Yesterday</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="activity-type convert">Convert</span></td>
-                                        <td>EUR to ETH</td>
-                                        <td>0.25 ETH</td>
-                                        <td><span class="status completed">Completed</span></td>
-                                        <td>Yesterday</td>
+                                <tbody id="activityTableBody">
+                                    <!-- Will be loaded by JavaScript -->
+                                    <tr id="noActivityRow">
+                                        <td colspan="5" style="text-align: center; padding: 20px; color: #999;">
+                                            No activities yet. Start trading to see your activities here.
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1482,6 +1722,7 @@
 
         <!-- Wallet Page -->
         <div id="walletPage" class="page hidden">
+            <!-- Same as original wallet page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1489,17 +1730,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserWallet">onixuser</h4>
+                        <h4 id="loggedInUserWallet">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')">
                         <i class="fas fa-home"></i>
@@ -1535,7 +1776,7 @@
                     </a>
                 </nav>
             </div>
-
+            
             <div class="main-content">
                 <header class="topbar">
                     <div class="topbar-left">
@@ -1553,31 +1794,33 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <div class="dashboard-content">
                     <div class="operation-container">
                         <h2>Connect Your Wallet</h2>
                         <div class="form-group">
                             <label>Select Wallet Type</label>
-                            <select id="walletType" class="form-select">
-                                <option value="evm">Web3 EVM Wallet (MetaMask / Trust / Coinbase)</option>
-                                <option value="phantom">Phantom (Solana)</option>
+                            <select class="form-select">
+                                <option>MetaMask</option>
+                                <option>Trust Wallet</option>
+                                <option>Coinbase Wallet</option>
+                                <option>WalletConnect</option>
+                                <option>Phantom</option>
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
                             <label>Wallet Address</label>
-                            <input type="text" id="walletAddressInput" placeholder="0x... (will be filled automatically after connect)" class="form-control" readonly>
+                            <input type="text" placeholder="0x..." class="form-control">
                         </div>
-
+                        
                         <button id="connectWalletBtn" class="btn-primary btn-block">
                             <i class="fas fa-plug"></i> Connect Wallet
                         </button>
-                        <p id="walletStatus" class="form-info" style="margin-top:10px;"></p>
                     </div>
-
+                    
                     <div class="quick-actions">
-                        <h2>Connected Wallets (Demo)</h2>
+                        <h2>Connected Wallets</h2>
                         <div class="actions-container">
                             <div class="action-card">
                                 <div class="action-icon">
@@ -1587,7 +1830,7 @@
                                 <p>0x1a2b...3c4d</p>
                                 <p class="wallet-balance">2.5 ETH</p>
                             </div>
-
+                            
                             <div class="action-card">
                                 <div class="action-icon">
                                     <i class="fab fa-bitcoin"></i>
@@ -1596,7 +1839,7 @@
                                 <p>bc1qxy...kg7g</p>
                                 <p class="wallet-balance">0.15 BTC</p>
                             </div>
-
+                            
                             <div class="action-card">
                                 <div class="action-icon">
                                     <i class="fas fa-coins"></i>
@@ -1613,6 +1856,7 @@
 
         <!-- Swap Page -->
         <div id="swapPage" class="page hidden">
+            <!-- Same as original swap page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1620,17 +1864,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserSwap">onixuser</h4>
+                        <h4 id="loggedInUserSwap">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')">
                         <i class="fas fa-home"></i>
@@ -1666,12 +1910,12 @@
                     </a>
                 </nav>
             </div>
-
+            
             <div class="main-content">
                 <header class="topbar">
                     <div class="topbar-left">
                         <h1>Swap Tokens</h1>
-                        <p>Exchange cryptocurrencies instantly (UI demo – execution via wallet)</p>
+                        <p>Exchange cryptocurrencies instantly</p>
                     </div>
                     <div class="topbar-right">
                         <div class="notifications">
@@ -1684,7 +1928,7 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <div class="dashboard-content">
                     <div class="operation-container">
                         <h2>Swap Tokens</h2>
@@ -1693,10 +1937,10 @@
                                 <label>From</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" id="swapFromAmount" placeholder="Amount" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" required>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select id="swapFromToken" class="form-select">
+                                        <select class="form-select">
                                             <option>ETH</option>
                                             <option>BTC</option>
                                             <option>USDT</option>
@@ -1706,19 +1950,19 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="swap-arrow">
                                 <i class="fas fa-exchange-alt"></i>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>To</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" id="swapToAmount" placeholder="Amount (estimated)" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" required>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select id="swapToToken" class="form-select">
+                                        <select class="form-select">
                                             <option>USDT</option>
                                             <option>ETH</option>
                                             <option>BTC</option>
@@ -1728,12 +1972,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="swap-info">
-                                <p>Exchange Rate (demo): 1 ETH = 2,980.30 USDT</p>
-                                <p>Estimated Fees (demo): $12.50</p>
+                                <p>Exchange Rate: 1 ETH = 2,980.30 USDT</p>
+                                <p>Estimated Fees: $12.50</p>
                             </div>
-
+                            
                             <button type="submit" class="btn-primary btn-block">
                                 <i class="fas fa-exchange-alt"></i> Swap Now
                             </button>
@@ -1745,6 +1989,7 @@
 
         <!-- Convert Page -->
         <div id="convertPage" class="page hidden">
+            <!-- Same as original convert page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1752,17 +1997,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserConvert">onixuser</h4>
+                        <h4 id="loggedInUserConvert">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')">
                         <i class="fas fa-home"></i>
@@ -1798,12 +2043,12 @@
                     </a>
                 </nav>
             </div>
-
+            
             <div class="main-content">
                 <header class="topbar">
                     <div class="topbar-left">
                         <h1>Convert</h1>
-                        <p>Convert between crypto and fiat currencies (UI demo)</p>
+                        <p>Convert between crypto and fiat currencies</p>
                     </div>
                     <div class="topbar-right">
                         <div class="notifications">
@@ -1816,7 +2061,7 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <div class="dashboard-content">
                     <div class="operation-container">
                         <h2>Convert Currency</h2>
@@ -1825,10 +2070,10 @@
                                 <label>From</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" id="convertFromAmount" placeholder="Amount" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" required>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select id="convertFromCurrency" class="form-select">
+                                        <select class="form-select">
                                             <option>BTC</option>
                                             <option>ETH</option>
                                             <option>USD</option>
@@ -1838,19 +2083,19 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="swap-arrow">
                                 <i class="fas fa-sync-alt"></i>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>To</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" id="convertToAmount" placeholder="Amount (estimated)" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" required>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select id="convertToCurrency" class="form-select">
+                                        <select class="form-select">
                                             <option>USD</option>
                                             <option>EUR</option>
                                             <option>GBP</option>
@@ -1860,12 +2105,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="swap-info">
-                                <p>Exchange Rate (demo): 1 BTC = $43,250.75</p>
-                                <p>Estimated Fees (demo): $25.00</p>
+                                <p>Exchange Rate: 1 BTC = $43,250.75</p>
+                                <p>Estimated Fees: $25.00</p>
                             </div>
-
+                            
                             <button type="submit" class="btn-primary btn-block">
                                 <i class="fas fa-sync-alt"></i> Convert Now
                             </button>
@@ -1877,6 +2122,7 @@
 
         <!-- Trade Page -->
         <div id="tradePage" class="page hidden">
+            <!-- Same as original trade page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1884,17 +2130,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserTrade">onixuser</h4>
+                        <h4 id="loggedInUserTrade">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')">
                         <i class="fas fa-home"></i>
@@ -1930,12 +2176,12 @@
                     </a>
                 </nav>
             </div>
-
+            
             <div class="main-content">
                 <header class="topbar">
                     <div class="topbar-left">
                         <h1>Trade</h1>
-                        <p>Advanced crypto trading (feature under development)</p>
+                        <p>Advanced crypto trading</p>
                     </div>
                     <div class="topbar-right">
                         <div class="notifications">
@@ -1948,27 +2194,24 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <div class="dashboard-content">
                     <div class="operation-container">
-                        <div class="trade-note">
-                            Trading is currently disabled on this demo. This section is under development and will be activated later.
-                        </div>
-                        <h2>Place Trade Order (Disabled)</h2>
+                        <h2>Place Trade Order</h2>
                         <form id="tradeForm">
                             <div class="form-group">
                                 <label>Order Type</label>
-                                <select class="form-select" disabled>
+                                <select class="form-select">
                                     <option>Market Order</option>
                                     <option>Limit Order</option>
                                     <option>Stop Loss</option>
                                     <option>Take Profit</option>
                                 </select>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>Asset</label>
-                                <select class="form-select" disabled>
+                                <select class="form-select">
                                     <option>BTC/USDT</option>
                                     <option>ETH/USDT</option>
                                     <option>BNB/USDT</option>
@@ -1976,32 +2219,32 @@
                                     <option>ADA/USDT</option>
                                 </select>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>Side</label>
                                 <div style="display: flex; gap: 1rem;">
                                     <label class="checkbox">
-                                        <input type="radio" name="side" value="buy" disabled checked>
+                                        <input type="radio" name="side" value="buy" checked>
                                         <span>Buy</span>
                                     </label>
                                     <label class="checkbox">
-                                        <input type="radio" name="side" value="sell" disabled>
+                                        <input type="radio" name="side" value="sell">
                                         <span>Sell</span>
                                     </label>
                                 </div>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>Amount</label>
-                                <input type="number" placeholder="0.00" class="form-control" disabled>
+                                <input type="number" placeholder="0.00" class="form-control" required>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label>Price (for limit orders)</label>
-                                <input type="number" placeholder="Optional" class="form-control" disabled>
+                                <input type="number" placeholder="Optional" class="form-control">
                             </div>
-
-                            <button type="submit" class="btn-primary btn-block" disabled>
+                            
+                            <button type="submit" class="btn-primary btn-block">
                                 <i class="fas fa-chart-line"></i> Place Order
                             </button>
                         </form>
@@ -2028,15 +2271,15 @@
                     </div>
                 </nav>
             </header>
-
+            
             <div class="dashboard-content" style="margin-left: 0; padding-top: 2rem;">
                 <div class="topbar">
                     <div class="topbar-left">
                         <h1>Crypto Coins</h1>
-                        <p>Real-time cryptocurrency information (static demo data)</p>
+                        <p>Real-time cryptocurrency information</p>
                     </div>
                 </div>
-
+                
                 <div class="coins-container" id="coinsContainer">
                     <!-- Coins will be loaded here by JavaScript -->
                 </div>
@@ -2052,17 +2295,17 @@
                         <span>ONIX</span>
                     </div>
                 </div>
-
+                
                 <div class="user-info">
                     <div class="avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserProfile">onixuser</h4>
+                        <h4 id="loggedInUserProfile">admin_master_9281</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
-
+                
                 <nav class="sidebar-nav">
                     <a onclick="showPage('dashboardPage')">
                         <i class="fas fa-home"></i>
@@ -2098,7 +2341,7 @@
                     </a>
                 </nav>
             </div>
-
+            
             <div class="main-content">
                 <header class="topbar">
                     <div class="topbar-left">
@@ -2112,35 +2355,35 @@
                         </div>
                     </div>
                 </header>
-
+                
                 <div class="profile-container">
                     <div class="profile-header">
                         <div class="profile-avatar">
                             <i class="fas fa-user-circle"></i>
                         </div>
                         <div class="profile-info">
-                            <h2>onixuser</h2>
+                            <h2>admin_master_9281</h2>
                             <p>Premium Member since December 2023</p>
                         </div>
                     </div>
-
+                    
                     <div class="profile-details">
                         <div class="profile-section">
                             <h3>Account Information</h3>
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" value="onixuser" class="form-control" readonly>
+                                <input type="text" value="admin_master_9281" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" value="user@onixplatform.com" class="form-control">
+                                <input type="email" value="admin@onixplatform.com" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
                                 <input type="tel" value="+1 234 567 8900" class="form-control">
                             </div>
                         </div>
-
+                        
                         <div class="profile-section">
                             <h3>Security</h3>
                             <div class="form-group">
@@ -2163,375 +2406,987 @@
     </div>
 
     <script>
-        // Global state
-        let isLoggedIn = false;
+        // Professional Trading Platform - Complete System
+        // ==============================================
 
-        // Strong credentials (frontend-level only)
-        const validUsername = 'admin_master_9281';
-        const validPassword = 'Xv9!eP@73Qz#LmA2rT';
-
-        // Coin data
-        const coinData = [
-            {
-                name: 'Bitcoin',
-                symbol: 'BTC',
-                price: '$43,250.75',
-                change: '+2.5%',
-                changeType: 'positive',
-                marketCap: '$845.2B',
-                volume: '$32.5B',
-                supply: '19.5M BTC'
+        // Configuration
+        const CONFIG = {
+            APP_NAME: 'ONIX Trading Platform',
+            VERSION: '1.0.0',
+            DEFAULT_USER: {
+                username: 'admin_master_9281',
+                password: 'Xv9!eP@73Qz#LmA2rT',
+                email: 'admin@onixplatform.com',
+                role: 'admin',
+                balance: 10000,
+                joined: new Date().toISOString()
             },
-            {
-                name: 'Ethereum',
-                symbol: 'ETH',
-                price: '$2,980.30',
-                change: '+1.8%',
-                changeType: 'positive',
-                marketCap: '$358.4B',
-                volume: '$18.7B',
-                supply: '120.2M ETH'
+            CURRENCIES: ['USD', 'EUR', 'GBP', 'JPY'],
+            CRYPTOS: ['BTC', 'ETH', 'BNB', 'SOL', 'ADA', 'XRP', 'DOT', 'DOGE'],
+            FEES: {
+                swap: 0.003, // 0.3%
+                convert: 0.005, // 0.5%
+                trade: 0.001, // 0.1%
+                withdraw: 0.01 // 1%
             },
-            {
-                name: 'Binance Coin',
-                symbol: 'BNB',
-                price: '$305.75',
-                change: '-0.5%',
-                changeType: 'negative',
-                marketCap: '$47.2B',
-                volume: '$1.2B',
-                supply: '154.5M BNB'
-            },
-            {
-                name: 'Cardano',
-                symbol: 'ADA',
-                price: '$0.52',
-                change: '+5.2%',
-                changeType: 'positive',
-                marketCap: '$18.5B',
-                volume: '$450M',
-                supply: '35.6B ADA'
-            },
-            {
-                name: 'Solana',
-                symbol: 'SOL',
-                price: '$102.40',
-                change: '+3.7%',
-                changeType: 'positive',
-                marketCap: '$44.8B',
-                volume: '$2.1B',
-                supply: '437.6M SOL'
-            },
-            {
-                name: 'Polkadot',
-                symbol: 'DOT',
-                price: '$7.25',
-                change: '-1.2%',
-                changeType: 'negative',
-                marketCap: '$9.3B',
-                volume: '$280M',
-                supply: '1.28B DOT'
-            },
-            {
-                name: 'Dogecoin',
-                symbol: 'DOGE',
-                price: '$0.078',
-                change: '+8.5%',
-                changeType: 'positive',
-                marketCap: '$11.2B',
-                volume: '$650M',
-                supply: '143.3B DOGE'
-            },
-            {
-                name: 'Polygon',
-                symbol: 'MATIC',
-                price: '$0.85',
-                change: '+0.9%',
-                changeType: 'positive',
-                marketCap: '$8.3B',
-                volume: '$320M',
-                supply: '9.8B MATIC'
+            STORAGE_KEYS: {
+                USERS: 'onix_users',
+                TRANSACTIONS: 'onix_transactions',
+                WALLETS: 'onix_wallets',
+                SETTINGS: 'onix_settings',
+                SESSION: 'onix_session'
             }
-        ];
+        };
 
-        // Page navigation functions
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.add('hidden'));
+        // Application State
+        class AppState {
+            constructor() {
+                this.currentUser = null;
+                this.users = this.loadUsers();
+                this.transactions = this.loadTransactions();
+                this.wallets = this.loadWallets();
+                this.settings = this.loadSettings();
+                this.session = this.loadSession();
+                
+                // Initialize default data if empty
+                this.initializeData();
+            }
 
-            // Show requested page
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.remove('hidden');
+            // Data persistence methods
+            loadUsers() {
+                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.USERS);
+                return data ? JSON.parse(data) : [];
+            }
 
-                // Check authentication for protected pages
-                const protectedPages = ['dashboardPage', 'walletPage', 'swapPage', 'convertPage', 'tradePage', 'profilePage'];
-                if (protectedPages.includes(pageId) && !isLoggedIn) {
-                    showPage('loginPage');
-                    return;
+            loadTransactions() {
+                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.TRANSACTIONS);
+                return data ? JSON.parse(data) : [];
+            }
+
+            loadWallets() {
+                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.WALLETS);
+                return data ? JSON.parse(data) : [];
+            }
+
+            loadSettings() {
+                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.SETTINGS);
+                return data ? JSON.parse(data) : {
+                    theme: 'dark',
+                    currency: 'USD',
+                    language: 'en',
+                    notifications: true
+                };
+            }
+
+            loadSession() {
+                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.SESSION);
+                return data ? JSON.parse(data) : { isLoggedIn: false, userId: null };
+            }
+
+            saveUsers() {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.USERS, JSON.stringify(this.users));
+            }
+
+            saveTransactions() {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.TRANSACTIONS, JSON.stringify(this.transactions));
+            }
+
+            saveWallets() {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.WALLETS, JSON.stringify(this.wallets));
+            }
+
+            saveSettings() {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.SETTINGS, JSON.stringify(this.settings));
+            }
+
+            saveSession() {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.SESSION, JSON.stringify(this.session));
+            }
+
+            // Initialize default data
+            initializeData() {
+                if (this.users.length === 0) {
+                    this.users.push(CONFIG.DEFAULT_USER);
+                    this.saveUsers();
                 }
 
-                // Update user info on all pages
-                updateUserInfo();
-
-                // Update date on all pages
-                updateDates();
-
-                // Load coins if on coins page
-                if (pageId === 'coinsPage') {
-                    loadCoins();
+                if (this.wallets.length === 0) {
+                    const defaultWallets = [
+                        {
+                            userId: CONFIG.DEFAULT_USER.username,
+                            type: 'ethereum',
+                            address: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
+                            balances: {
+                                ETH: 2.5,
+                                BTC: 0.15,
+                                USDT: 10000,
+                                BNB: 150
+                            }
+                        }
+                    ];
+                    this.wallets = defaultWallets;
+                    this.saveWallets();
                 }
             }
-        }
 
-        function scrollToSection(sectionId) {
-            showPage('homePage');
-            setTimeout(() => {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
+            // User management
+            login(username, password) {
+                const user = this.users.find(u => 
+                    u.username === username && u.password === password
+                );
+                
+                if (user) {
+                    this.currentUser = user;
+                    this.session = {
+                        isLoggedIn: true,
+                        userId: user.username,
+                        loginTime: new Date().toISOString()
+                    };
+                    this.saveSession();
+                    return true;
                 }
-            }, 100);
-        }
-
-        function updateUserInfo() {
-            const username = localStorage.getItem('onixUsername') || 'onixuser';
-            const userElements = document.querySelectorAll('[id^="loggedInUser"]');
-            userElements.forEach(el => {
-                el.textContent = username;
-            });
-        }
-
-        function updateDates() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString('en-US', options);
-
-            const dateElements = document.querySelectorAll('[id^="currentDate"]');
-            dateElements.forEach(el => {
-                el.textContent = dateString;
-            });
-        }
-
-        function loadCoins() {
-            const container = document.getElementById('coinsContainer');
-            if (!container) return;
-
-            container.innerHTML = '';
-
-            coinData.forEach(coin => {
-                const coinCard = document.createElement('div');
-                coinCard.className = 'coin-card';
-
-                coinCard.innerHTML = `
-                    <div class="coin-header">
-                        <div class="coin-icon">
-                            <i class="fab fa-bitcoin"></i>
-                        </div>
-                        <div class="coin-name">
-                            <h3>${coin.name}</h3>
-                            <span class="coin-symbol">${coin.symbol}</span>
-                        </div>
-                    </div>
-                    <div class="coin-price">${coin.price}</div>
-                    <div class="coin-change ${coin.changeType}">
-                        <i class="fas fa-${coin.changeType === 'positive' ? 'arrow-up' : 'arrow-down'}"></i>
-                        <span>${coin.change}</span>
-                    </div>
-                    <div class="coin-details">
-                        <div class="coin-detail">
-                            <span>Market Cap</span>
-                            <span>${coin.marketCap}</span>
-                        </div>
-                        <div class="coin-detail">
-                            <span>24h Volume</span>
-                            <span>${coin.volume}</span>
-                        </div>
-                        <div class="coin-detail">
-                            <span>Circulating Supply</span>
-                            <span>${coin.supply}</span>
-                        </div>
-                    </div>
-                `;
-
-                container.appendChild(coinCard);
-            });
-        }
-
-        // Wallet connect logic
-        async function connectEvmWallet() {
-            const statusEl = document.getElementById('walletStatus');
-            const addrInput = document.getElementById('walletAddressInput');
-
-            if (!window.ethereum) {
-                statusEl.textContent = 'No Web3 wallet detected. Please install MetaMask or use a Web3-enabled browser/wallet.';
-                return;
+                return false;
             }
 
-            try {
-                statusEl.textContent = 'Requesting wallet connection...';
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const address = accounts[0];
-                addrInput.value = address;
-                statusEl.textContent = 'Connected to wallet: ' + address;
-            } catch (err) {
-                console.error(err);
-                statusEl.textContent = 'Wallet connection rejected or failed.';
-            }
-        }
-
-        async function connectPhantomWallet() {
-            const statusEl = document.getElementById('walletStatus');
-            const addrInput = document.getElementById('walletAddressInput');
-
-            const provider = window.solana;
-            if (!provider || !provider.isPhantom) {
-                statusEl.textContent = 'Phantom wallet not detected. Please install Phantom extension.';
-                return;
+            logout() {
+                this.currentUser = null;
+                this.session = { isLoggedIn: false, userId: null };
+                this.saveSession();
             }
 
-            try {
-                statusEl.textContent = 'Requesting Phantom connection...';
-                const resp = await provider.connect();
-                addrInput.value = resp.publicKey.toString();
-                statusEl.textContent = 'Connected to Phantom: ' + resp.publicKey.toString();
-            } catch (err) {
-                console.error(err);
-                statusEl.textContent = 'Phantom connection rejected or failed.';
+            getCurrentUser() {
+                return this.currentUser || this.users.find(u => u.username === this.session.userId);
             }
-        }
 
-        async function connectWallet() {
-            const walletType = document.getElementById('walletType').value;
-            if (walletType === 'evm') {
-                await connectEvmWallet();
-            } else if (walletType === 'phantom') {
-                await connectPhantomWallet();
+            // Transaction management
+            addTransaction(type, details, amount, status = 'completed', fee = 0) {
+                const transaction = {
+                    id: Date.now().toString(),
+                    userId: this.getCurrentUser().username,
+                    type,
+                    details,
+                    amount,
+                    fee,
+                    status,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.transactions.push(transaction);
+                this.saveTransactions();
+                return transaction;
             }
-        }
 
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check login status
-            const savedLogin = localStorage.getItem('onixLoggedIn');
-            isLoggedIn = savedLogin === 'true';
+            getUserTransactions() {
+                const userId = this.getCurrentUser().username;
+                return this.transactions.filter(t => t.userId === userId)
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            }
 
-            // Show home page by default
-            showPage('homePage');
+            // Wallet management
+            getUserWallets() {
+                const userId = this.getCurrentUser().username;
+                return this.wallets.filter(w => w.userId === userId);
+            }
 
-            // Set up login form
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm) {
-                loginForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    const username = document.getElementById('username').value.trim();
-                    const password = document.getElementById('password').value;
-
-                    if (username === validUsername && password === validPassword) {
-                        isLoggedIn = true;
-                        localStorage.setItem('onixLoggedIn', 'true');
-                        localStorage.setItem('onixUsername', username);
-
-                        alert('Login successful! Redirecting to dashboard...');
-                        showPage('dashboardPage');
-                    } else {
-                        alert('Invalid credentials. Please contact the platform administrator if you forgot your access data.');
+            updateWalletBalance(walletId, currency, amount) {
+                const wallet = this.wallets.find(w => w.id === walletId);
+                if (wallet) {
+                    if (!wallet.balances[currency]) {
+                        wallet.balances[currency] = 0;
                     }
-                });
+                    wallet.balances[currency] += amount;
+                    this.saveWallets();
+                }
+            }
 
-                // Toggle password visibility
-                const togglePassword = document.getElementById('togglePassword');
-                if (togglePassword) {
-                    togglePassword.addEventListener('click', function() {
-                        const passwordInput = document.getElementById('password');
-                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                        passwordInput.setAttribute('type', type);
-                        this.classList.toggle('fa-eye');
-                        this.classList.toggle('fa-eye-slash');
+            // Statistics
+            getUserStats() {
+                const userId = this.getCurrentUser().username;
+                const userTransactions = this.getUserTransactions();
+                
+                const today = new Date().toDateString();
+                const todayTransactions = userTransactions.filter(t => 
+                    new Date(t.timestamp).toDateString() === today
+                );
+
+                return {
+                    totalBalance: this.getCurrentUser().balance || 0,
+                    swapsToday: todayTransactions.filter(t => t.type === 'swap').length,
+                    conversions: todayTransactions.filter(t => t.type === 'convert').length,
+                    trades: todayTransactions.filter(t => t.type === 'trade').length
+                };
+            }
+        }
+
+        // Price Engine - Simulates live market data
+        class PriceEngine {
+            constructor() {
+                this.prices = {
+                    BTC: { price: 43250.75, change: 2.5 },
+                    ETH: { price: 2980.30, change: 1.8 },
+                    BNB: { price: 305.75, change: -0.5 },
+                    SOL: { price: 102.40, change: 3.7 },
+                    ADA: { price: 0.52, change: 5.2 },
+                    XRP: { price: 0.75, change: 0.8 },
+                    DOT: { price: 7.25, change: -1.2 },
+                    DOGE: { price: 0.078, change: 8.5 }
+                };
+                
+                this.startPriceUpdates();
+            }
+
+            startPriceUpdates() {
+                // Update prices every 30 seconds
+                setInterval(() => {
+                    this.updatePrices();
+                    if (typeof window.updatePriceDisplay === 'function') {
+                        window.updatePriceDisplay();
+                    }
+                }, 30000);
+            }
+
+            updatePrices() {
+                Object.keys(this.prices).forEach(symbol => {
+                    const change = (Math.random() - 0.5) * 2; // -1% to +1%
+                    this.prices[symbol].price *= (1 + change / 100);
+                    this.prices[symbol].change = change;
+                });
+            }
+
+            getPrice(symbol) {
+                return this.prices[symbol] || { price: 0, change: 0 };
+            }
+
+            getExchangeRate(from, to) {
+                const fromPrice = this.getPrice(from).price;
+                const toPrice = this.getPrice(to).price;
+                
+                if (from === 'USD') return 1 / toPrice;
+                if (to === 'USD') return fromPrice;
+                
+                return fromPrice / toPrice;
+            }
+        }
+
+        // Notification System
+        class NotificationSystem {
+            constructor() {
+                this.container = document.getElementById('notificationContainer');
+                if (!this.container) {
+                    this.container = document.createElement('div');
+                    this.container.id = 'notificationContainer';
+                    document.body.appendChild(this.container);
+                }
+            }
+
+            show(message, type = 'info', duration = 5000) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                this.container.appendChild(notification);
+                
+                // Auto remove after duration
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, duration);
+                
+                return notification;
+            }
+
+            success(message) {
+                return this.show(message, 'success');
+            }
+
+            error(message) {
+                return this.show(message, 'error');
+            }
+
+            warning(message) {
+                return this.show(message, 'warning');
+            }
+
+            info(message) {
+                return this.show(message, 'info');
+            }
+        }
+
+        // Trading Engine
+        class TradingEngine {
+            constructor(appState, priceEngine) {
+                this.appState = appState;
+                this.priceEngine = priceEngine;
+                this.notification = new NotificationSystem();
+            }
+
+            // Swap tokens
+            async swap(fromAmount, fromToken, toToken) {
+                try {
+                    this.notification.info('Processing swap...');
+                    
+                    // Simulate API delay
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    const exchangeRate = this.priceEngine.getExchangeRate(fromToken, toToken);
+                    const fee = fromAmount * exchangeRate * CONFIG.FEES.swap;
+                    const receivedAmount = fromAmount * exchangeRate - fee;
+                    
+                    // Add transaction
+                    this.appState.addTransaction(
+                        'swap',
+                        `${fromToken} to ${toToken}`,
+                        receivedAmount,
+                        'completed',
+                        fee
+                    );
+                    
+                    // Update user balance
+                    const user = this.appState.getCurrentUser();
+                    user.balance += receivedAmount * 0.01; // Add small commission
+                    
+                    this.notification.success(`Swap completed! Received ${receivedAmount.toFixed(4)} ${toToken}`);
+                    return { success: true, amount: receivedAmount, fee };
+                    
+                } catch (error) {
+                    this.notification.error('Swap failed: ' + error.message);
+                    return { success: false, error: error.message };
+                }
+            }
+
+            // Convert currency
+            async convert(amount, fromCurrency, toCurrency) {
+                try {
+                    this.notification.info('Processing conversion...');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    let exchangeRate;
+                    if (['USD', 'EUR', 'GBP', 'JPY'].includes(fromCurrency) && 
+                        ['USD', 'EUR', 'GBP', 'JPY'].includes(toCurrency)) {
+                        // Fiat to fiat
+                        exchangeRate = this.getFiatRate(fromCurrency, toCurrency);
+                    } else {
+                        // Crypto to fiat or vice versa
+                        exchangeRate = this.priceEngine.getExchangeRate(
+                            fromCurrency === 'USD' ? 'USDT' : fromCurrency,
+                            toCurrency === 'USD' ? 'USDT' : toCurrency
+                        );
+                    }
+                    
+                    const fee = amount * exchangeRate * CONFIG.FEES.convert;
+                    const receivedAmount = amount * exchangeRate - fee;
+                    
+                    this.appState.addTransaction(
+                        'convert',
+                        `${fromCurrency} to ${toCurrency}`,
+                        receivedAmount,
+                        'completed',
+                        fee
+                    );
+                    
+                    this.notification.success(`Conversion completed! Received ${receivedAmount.toFixed(2)} ${toCurrency}`);
+                    return { success: true, amount: receivedAmount, fee };
+                    
+                } catch (error) {
+                    this.notification.error('Conversion failed: ' + error.message);
+                    return { success: false, error: error.message };
+                }
+            }
+
+            // Place trade order
+            async trade(orderType, asset, side, amount, price = null) {
+                try {
+                    this.notification.info('Placing trade order...');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    
+                    const fee = amount * (price || this.priceEngine.getPrice(asset.split('/')[0]).price) * CONFIG.FEES.trade;
+                    
+                    this.appState.addTransaction(
+                        'trade',
+                        `${side.toUpperCase()} ${asset} (${orderType})`,
+                        amount,
+                        'completed',
+                        fee
+                    );
+                    
+                    this.notification.success(`Trade ${side} order executed successfully!`);
+                    return { success: true, fee };
+                    
+                } catch (error) {
+                    this.notification.error('Trade failed: ' + error.message);
+                    return { success: false, error: error.message };
+                }
+            }
+
+            getFiatRate(from, to) {
+                const rates = {
+                    USD: { EUR: 0.92, GBP: 0.79, JPY: 110.5 },
+                    EUR: { USD: 1.085, GBP: 0.865, JPY: 120.3 },
+                    GBP: { USD: 1.265, EUR: 1.155, JPY: 139.2 },
+                    JPY: { USD: 0.00905, EUR: 0.00831, GBP: 0.00718 }
+                };
+                return rates[from] && rates[from][to] ? rates[from][to] : 1;
+            }
+        }
+
+        // UI Manager
+        class UIManager {
+            constructor(appState, tradingEngine) {
+                this.appState = appState;
+                this.tradingEngine = tradingEngine;
+                this.notification = new NotificationSystem();
+                this.priceEngine = new PriceEngine();
+            }
+
+            // Page navigation
+            showPage(pageId) {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => page.classList.add('hidden'));
+                
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                    
+                    // Check authentication for protected pages
+                    const protectedPages = ['dashboardPage', 'walletPage', 'swapPage', 'convertPage', 'tradePage', 'profilePage'];
+                    if (protectedPages.includes(pageId) && !this.appState.session.isLoggedIn) {
+                        this.showPage('loginPage');
+                        return;
+                    }
+                    
+                    this.updatePageData(pageId);
+                }
+            }
+
+            updatePageData(pageId) {
+                this.updateUserInfo();
+                this.updateDates();
+                
+                switch (pageId) {
+                    case 'dashboardPage':
+                        this.updateDashboard();
+                        break;
+                    case 'coinsPage':
+                        this.loadCoins();
+                        break;
+                    case 'swapPage':
+                        this.updateSwapEstimate();
+                        break;
+                    case 'convertPage':
+                        this.updateConvertEstimate();
+                        break;
+                }
+            }
+
+            updateUserInfo() {
+                const user = this.appState.getCurrentUser();
+                if (user) {
+                    const userElements = document.querySelectorAll('[id^="loggedInUser"]');
+                    userElements.forEach(el => {
+                        el.textContent = user.username;
                     });
                 }
             }
 
-            // Set up logout buttons
-            const logoutButtons = document.querySelectorAll('[id^="logoutBtn"]');
-            logoutButtons.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    isLoggedIn = false;
-                    localStorage.removeItem('onixLoggedIn');
-                    localStorage.removeItem('onixUsername');
-                    alert('You have been logged out.');
-                    showPage('homePage');
-                });
-            });
-
-            // Set up wallet connection
-            const connectWalletBtn = document.getElementById('connectWalletBtn');
-            if (connectWalletBtn) {
-                connectWalletBtn.addEventListener('click', function() {
-                    connectWallet();
+            updateDates() {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateString = now.toLocaleDateString('en-US', options);
+                
+                const dateElements = document.querySelectorAll('[id^="currentDate"]');
+                dateElements.forEach(el => {
+                    el.textContent = dateString;
                 });
             }
 
-            // Set up forms
-            const swapForm = document.getElementById('swapForm');
-            if (swapForm) {
-                swapForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const fromAmount = document.getElementById('swapFromAmount').value;
-                    const fromToken = document.getElementById('swapFromToken').value;
-                    const toAmount = document.getElementById('swapToAmount').value;
-                    const toToken = document.getElementById('swapToToken').value;
+            updateDashboard() {
+                const stats = this.appState.getUserStats();
+                
+                document.getElementById('totalBalance').textContent = stats.totalBalance.toFixed(2);
+                document.getElementById('swapsCount').textContent = stats.swapsToday;
+                document.getElementById('conversionsCount').textContent = stats.conversions;
+                document.getElementById('tradesCount').textContent = stats.trades;
+                
+                this.updateActivityTable();
+                this.updateNotificationBadge();
+            }
 
-                    alert(
-                        'Swap (demo only):\n' +
-                        fromAmount + ' ' + fromToken + ' → ' +
-                        toAmount + ' ' + toToken +
-                        '\n\nIn a real integration, this step would open your wallet to sign the swap transaction.'
+            updateActivityTable() {
+                const tableBody = document.getElementById('activityTableBody');
+                const noActivityRow = document.getElementById('noActivityRow');
+                
+                const transactions = this.appState.getUserTransactions().slice(0, 5);
+                
+                if (transactions.length === 0) {
+                    if (noActivityRow) noActivityRow.style.display = '';
+                    return;
+                }
+                
+                if (noActivityRow) noActivityRow.style.display = 'none';
+                
+                tableBody.innerHTML = '';
+                transactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    const time = new Date(transaction.timestamp).toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                    
+                    row.innerHTML = `
+                        <td><span class="activity-type ${transaction.type}">${transaction.type}</span></td>
+                        <td>${transaction.details}</td>
+                        <td>${transaction.amount.toFixed(4)}</td>
+                        <td><span class="status ${transaction.status}">${transaction.status}</span></td>
+                        <td>${time}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            updateNotificationBadge() {
+                const transactions = this.appState.getUserTransactions();
+                const unread = transactions.filter(t => 
+                    t.status === 'pending' || 
+                    new Date(t.timestamp) > new Date(Date.now() - 24 * 60 * 60 * 1000)
+                ).length;
+                
+                const badges = document.querySelectorAll('.badge');
+                badges.forEach(badge => {
+                    badge.textContent = Math.min(unread, 9);
+                });
+            }
+
+            loadCoins() {
+                const container = document.getElementById('coinsContainer');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                
+                Object.entries(this.priceEngine.prices).forEach(([symbol, data]) => {
+                    const coinCard = document.createElement('div');
+                    coinCard.className = 'coin-card';
+                    
+                    coinCard.innerHTML = `
+                        <div class="coin-header">
+                            <div class="coin-icon">
+                                <i class="fab fa-${symbol.toLowerCase()}"></i>
+                            </div>
+                            <div class="coin-name">
+                                <h3>${this.getCoinName(symbol)}</h3>
+                                <span class="coin-symbol">${symbol}</span>
+                            </div>
+                        </div>
+                        <div class="coin-price">$${data.price.toFixed(2)}</div>
+                        <div class="coin-change ${data.change >= 0 ? 'positive' : 'negative'}">
+                            <i class="fas fa-${data.change >= 0 ? 'arrow-up' : 'arrow-down'}"></i>
+                            <span>${data.change >= 0 ? '+' : ''}${data.change.toFixed(2)}%</span>
+                        </div>
+                        <div class="coin-details">
+                            <div class="coin-detail">
+                                <span>Market Cap</span>
+                                <span>${this.formatMarketCap(symbol)}</span>
+                            </div>
+                            <div class="coin-detail">
+                                <span>24h Volume</span>
+                                <span>${this.formatVolume(symbol)}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(coinCard);
+                });
+            }
+
+            updateSwapEstimate() {
+                const fromToken = document.getElementById('swapFromToken').value;
+                const toToken = document.getElementById('swapToToken').value;
+                const fromAmount = parseFloat(document.getElementById('swapFromAmount').value) || 0;
+                
+                const exchangeRate = this.priceEngine.getExchangeRate(fromToken, toToken);
+                const estimatedAmount = fromAmount * exchangeRate * (1 - CONFIG.FEES.swap);
+                
+                document.getElementById('swapToAmount').value = estimatedAmount.toFixed(6);
+                
+                const exchangeRateElement = document.querySelector('#exchangeRate');
+                if (exchangeRateElement) {
+                    exchangeRateElement.textContent = `1 ${fromToken} = ${exchangeRate.toFixed(2)} ${toToken}`;
+                }
+                
+                const feesElement = document.querySelector('#estimatedFees');
+                if (feesElement) {
+                    feesElement.textContent = `$${(fromAmount * exchangeRate * CONFIG.FEES.swap).toFixed(2)}`;
+                }
+            }
+
+            updateConvertEstimate() {
+                const fromCurrency = document.getElementById('convertFromCurrency').value;
+                const toCurrency = document.getElementById('convertToCurrency').value;
+                const fromAmount = parseFloat(document.getElementById('convertFromAmount').value) || 0;
+                
+                let exchangeRate;
+                if (['USD', 'EUR', 'GBP', 'JPY'].includes(fromCurrency) && 
+                    ['USD', 'EUR', 'GBP', 'JPY'].includes(toCurrency)) {
+                    exchangeRate = this.tradingEngine.getFiatRate(fromCurrency, toCurrency);
+                } else {
+                    exchangeRate = this.priceEngine.getExchangeRate(
+                        fromCurrency === 'USD' ? 'USDT' : fromCurrency,
+                        toCurrency === 'USD' ? 'USDT' : toCurrency
                     );
+                }
+                
+                const estimatedAmount = fromAmount * exchangeRate * (1 - CONFIG.FEES.convert);
+                document.getElementById('convertToAmount').value = estimatedAmount.toFixed(2);
+                
+                const rateElement = document.querySelector('#convertRate');
+                if (rateElement) {
+                    rateElement.textContent = `1 ${fromCurrency} = ${exchangeRate.toFixed(2)} ${toCurrency}`;
+                }
+                
+                const feesElement = document.querySelector('#convertFees');
+                if (feesElement) {
+                    feesElement.textContent = `$${(fromAmount * exchangeRate * CONFIG.FEES.convert).toFixed(2)}`;
+                }
+            }
+
+            // Helper methods
+            getCoinName(symbol) {
+                const names = {
+                    BTC: 'Bitcoin',
+                    ETH: 'Ethereum',
+                    BNB: 'Binance Coin',
+                    SOL: 'Solana',
+                    ADA: 'Cardano',
+                    XRP: 'Ripple',
+                    DOT: 'Polkadot',
+                    DOGE: 'Dogecoin'
+                };
+                return names[symbol] || symbol;
+            }
+
+            formatMarketCap(symbol) {
+                const caps = {
+                    BTC: '$845.2B',
+                    ETH: '$358.4B',
+                    BNB: '$47.2B',
+                    SOL: '$44.8B',
+                    ADA: '$18.5B',
+                    XRP: '$34.2B',
+                    DOT: '$9.3B',
+                    DOGE: '$11.2B'
+                };
+                return caps[symbol] || '$0.00';
+            }
+
+            formatVolume(symbol) {
+                const volumes = {
+                    BTC: '$32.5B',
+                    ETH: '$18.7B',
+                    BNB: '$1.2B',
+                    SOL: '$2.1B',
+                    ADA: '$450M',
+                    XRP: '$1.8B',
+                    DOT: '$280M',
+                    DOGE: '$650M'
+                };
+                return volumes[symbol] || '$0.00';
+            }
+
+            scrollToSection(sectionId) {
+                this.showPage('homePage');
+                setTimeout(() => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Initialize Application
+        class Application {
+            constructor() {
+                this.appState = new AppState();
+                this.priceEngine = new PriceEngine();
+                this.tradingEngine = new TradingEngine(this.appState, this.priceEngine);
+                this.uiManager = new UIManager(this.appState, this.tradingEngine);
+                this.notification = new NotificationSystem();
+                
+                this.initialize();
+            }
+
+            initialize() {
+                this.setupEventListeners();
+                this.restoreSession();
+                this.uiManager.updateDates();
+                
+                // Start price updates
+                window.updatePriceDisplay = () => {
+                    if (!document.getElementById('coinsPage').classList.contains('hidden')) {
+                        this.uiManager.loadCoins();
+                    }
+                };
+                
+                this.notification.info(`${CONFIG.APP_NAME} v${CONFIG.VERSION} loaded successfully`);
+            }
+
+            setupEventListeners() {
+                // Login form
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+                    
+                    // Password visibility toggle
+                    const togglePassword = document.getElementById('togglePassword');
+                    if (togglePassword) {
+                        togglePassword.addEventListener('click', () => {
+                            const passwordInput = document.getElementById('password');
+                            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                            passwordInput.setAttribute('type', type);
+                            togglePassword.classList.toggle('fa-eye');
+                            togglePassword.classList.toggle('fa-eye-slash');
+                        });
+                    }
+                }
+
+                // Logout buttons
+                document.querySelectorAll('[id^="logoutBtn"]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.handleLogout();
+                    });
+                });
+
+                // Swap form
+                const swapForm = document.getElementById('swapForm');
+                if (swapForm) {
+                    swapForm.addEventListener('submit', (e) => this.handleSwap(e));
+                    
+                    // Live estimate updates
+                    const swapInputs = ['swapFromAmount', 'swapFromToken', 'swapToToken'];
+                    swapInputs.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.addEventListener('input', () => this.uiManager.updateSwapEstimate());
+                            element.addEventListener('change', () => this.uiManager.updateSwapEstimate());
+                        }
+                    });
+                }
+
+                // Convert form
+                const convertForm = document.getElementById('convertForm');
+                if (convertForm) {
+                    convertForm.addEventListener('submit', (e) => this.handleConvert(e));
+                    
+                    const convertInputs = ['convertFromAmount', 'convertFromCurrency', 'convertToCurrency'];
+                    convertInputs.forEach(id => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.addEventListener('input', () => this.uiManager.updateConvertEstimate());
+                            element.addEventListener('change', () => this.uiManager.updateConvertEstimate());
+                        }
+                    });
+                }
+
+                // Trade form
+                const tradeForm = document.getElementById('tradeForm');
+                if (tradeForm) {
+                    tradeForm.addEventListener('submit', (e) => this.handleTrade(e));
+                    
+                    // Show/hide limit price input
+                    const orderTypeSelect = document.querySelector('#orderType');
+                    if (orderTypeSelect) {
+                        orderTypeSelect.addEventListener('change', (e) => {
+                            const priceInput = document.querySelector('#limitPrice');
+                            if (priceInput) {
+                                priceInput.parentElement.style.display = 
+                                    e.target.value === 'limit' ? 'block' : 'none';
+                            }
+                        });
+                    }
+                }
+
+                // Wallet connection
+                const connectWalletBtn = document.getElementById('connectWalletBtn');
+                if (connectWalletBtn) {
+                    connectWalletBtn.addEventListener('click', () => this.handleWalletConnect());
+                }
+
+                // Mobile menu
+                const mobileMenu = document.querySelector('.mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.addEventListener('click', () => {
+                        const navLinks = document.querySelector('.nav-links');
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    });
+                }
+
+                // Forgot password
+                document.querySelectorAll('.forgot-password').forEach(link => {
+                    link.addEventListener('click', () => {
+                        this.notification.info('Password reset instructions have been sent to your email.');
+                    });
                 });
             }
 
-            const convertForm = document.getElementById('convertForm');
-            if (convertForm) {
-                convertForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const fromAmount = document.getElementById('convertFromAmount').value;
-                    const fromCurrency = document.getElementById('convertFromCurrency').value;
-                    const toAmount = document.getElementById('convertToAmount').value;
-                    const toCurrency = document.getElementById('convertToCurrency').value;
-
-                    alert(
-                        'Convert (demo only):\n' +
-                        fromAmount + ' ' + fromCurrency + ' → ' +
-                        toAmount + ' ' + toCurrency +
-                        '\n\nIn a real integration, this step would call an exchange API or open your wallet for confirmation.'
-                    );
-                });
+            restoreSession() {
+                if (this.appState.session.isLoggedIn) {
+                    this.uiManager.showPage('dashboardPage');
+                    this.notification.success(`Welcome back, ${this.appState.getCurrentUser().username}!`);
+                } else {
+                    this.uiManager.showPage('homePage');
+                }
             }
 
-            const tradeForm = document.getElementById('tradeForm');
-            if (tradeForm) {
-                tradeForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('Trading is currently disabled. This feature is under development.');
-                });
+            // Event handlers
+            async handleLogin(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.querySelector('input[name="remember"]').checked;
+                
+                if (this.appState.login(username, password)) {
+                    this.notification.success('Login successful! Redirecting to dashboard...');
+                    
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedUser', username);
+                    }
+                    
+                    setTimeout(() => {
+                        this.uiManager.showPage('dashboardPage');
+                    }, 1000);
+                } else {
+                    this.notification.error('Invalid username or password. Please try again.');
+                }
             }
 
-            // Mobile menu toggle
-            const mobileMenu = document.querySelector('.mobile-menu');
-            if (mobileMenu) {
-                mobileMenu.addEventListener('click', function() {
-                    const navLinks = document.querySelector('.nav-links');
-                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                });
+            handleLogout() {
+                this.appState.logout();
+                this.notification.info('You have been logged out successfully.');
+                this.uiManager.showPage('homePage');
             }
 
-            // Update dates initially
-            updateDates();
+            async handleSwap(e) {
+                e.preventDefault();
+                
+                const fromAmount = parseFloat(document.getElementById('swapFromAmount').value);
+                const fromToken = document.getElementById('swapFromToken').value;
+                const toToken = document.getElementById('swapToToken').value;
+                
+                if (!fromAmount || fromAmount <= 0) {
+                    this.notification.error('Please enter a valid amount');
+                    return;
+                }
+                
+                const result = await this.tradingEngine.swap(fromAmount, fromToken, toToken);
+                if (result.success) {
+                    this.uiManager.updateDashboard();
+                    this.uiManager.updateSwapEstimate();
+                }
+            }
+
+            async handleConvert(e) {
+                e.preventDefault();
+                
+                const amount = parseFloat(document.getElementById('convertFromAmount').value);
+                const fromCurrency = document.getElementById('convertFromCurrency').value;
+                const toCurrency = document.getElementById('convertToCurrency').value;
+                
+                if (!amount || amount <= 0) {
+                    this.notification.error('Please enter a valid amount');
+                    return;
+                }
+                
+                const result = await this.tradingEngine.convert(amount, fromCurrency, toCurrency);
+                if (result.success) {
+                    this.uiManager.updateDashboard();
+                    this.uiManager.updateConvertEstimate();
+                }
+            }
+
+            async handleTrade(e) {
+                e.preventDefault();
+                
+                const orderType = document.getElementById('orderType').value;
+                const asset = document.getElementById('assetPair').value;
+                const side = document.querySelector('input[name="side"]:checked').value;
+                const amount = parseFloat(document.getElementById('tradeAmount').value);
+                const price = document.getElementById('limitPrice')?.value || null;
+                
+                if (!amount || amount <= 0) {
+                    this.notification.error('Please enter a valid amount');
+                    return;
+                }
+                
+                const result = await this.tradingEngine.trade(orderType, asset, side, amount, price);
+                if (result.success) {
+                    this.uiManager.updateDashboard();
+                }
+            }
+
+            async handleWalletConnect() {
+                this.notification.info('Connecting wallet...');
+                
+                // Simulate wallet connection
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const walletType = document.querySelector('#walletType')?.value || 'metamask';
+                const address = this.generateWalletAddress();
+                
+                // Update UI
+                const addressInput = document.getElementById('walletAddressInput');
+                if (addressInput) {
+                    addressInput.value = address;
+                }
+                
+                this.notification.success(`Wallet connected: ${address.substring(0, 10)}...`);
+                
+                // Add transaction
+                this.appState.addTransaction(
+                    'wallet',
+                    `Connected ${walletType}`,
+                    0,
+                    'completed'
+                );
+                
+                this.uiManager.updateDashboard();
+            }
+
+            generateWalletAddress() {
+                const chars = '0123456789abcdef';
+                let address = '0x';
+                for (let i = 0; i < 40; i++) {
+                    address += chars[Math.floor(Math.random() * chars.length)];
+                }
+                return address;
+            }
+        }
+
+        // Start the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new Application();
+            
+            // Make some functions globally available for inline event handlers
+            window.showPage = (pageId) => window.app.uiManager.showPage(pageId);
+            window.scrollToSection = (sectionId) => window.app.uiManager.scrollToSection(sectionId);
         });
+
+        // Add missing Font Awesome icons for coins
+        const style = document.createElement('style');
+        style.textContent = `
+            .fa-btc:before { content: "\\f15a"; }
+            .fa-eth:before { content: "\\f42e"; }
+            .fa-bnb:before { content: "\\f3d5"; }
+            .fa-sol:before { content: "\\f3d7"; }
+            .fa-ada:before { content: "\\f3d6"; }
+            .fa-xrp:before { content: "\\f3d8"; }
+            .fa-dot:before { content: "\\f3d9"; }
+            .fa-doge:before { content: "\\f3da"; }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
