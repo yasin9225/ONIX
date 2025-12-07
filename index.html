@@ -1339,17 +1339,209 @@
             justify-content: flex-end;
             gap: 1rem;
         }
+
+        /* التعديلات الجديدة */
+        
+        /* Wallet Display */
+        .wallet-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .wallet-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .wallet-status.connected {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+        
+        .wallet-status.disconnected {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        /* Balance Input */
+        .balance-input {
+            position: relative;
+        }
+        
+        .balance-info {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .balance-info span:last-child {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Swap Estimate */
+        .swap-estimate {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .swap-estimate-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .swap-estimate-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .swap-rate {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        /* Notifications Dropdown */
+        .notifications-container {
+            position: relative;
+        }
+        
+        .notifications-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 350px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-dark);
+            z-index: 1000;
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .notifications-container:hover .notifications-dropdown {
+            display: block;
+        }
+        
+        .notification-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .notification-item:hover {
+            background: var(--light);
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        /* Transaction Details */
+        .transaction-details-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+        
+        .transaction-details-container h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .transaction-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .transaction-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .transaction-list-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Wallet Connect Button */
+        .wallet-connect-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        
+        /* Connected Wallets */
+        .connected-wallets {
+            margin-top: 2rem;
+        }
+        
+        .wallet-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .wallet-card-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <!-- Notification Container -->
     <div id="notificationContainer"></div>
 
+    <!-- Swap Confirmation Modal -->
+    <div id="swapModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Confirm Swap</h2>
+            </div>
+            <div class="modal-body">
+                <div id="swapDetails">
+                    <!-- Swap details will be filled here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="hideModal('swapModal')" class="btn-secondary">Cancel</button>
+                <button onclick="confirmSwap()" class="btn-primary">Confirm Swap</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Pages Container -->
     <div id="pagesContainer">
         <!-- Home Page -->
         <div id="homePage" class="page">
-            <!-- Same as original home page -->
             <!-- Header -->
             <header class="header">
                 <nav class="navbar">
@@ -1528,7 +1720,6 @@
 
         <!-- Dashboard Page -->
         <div id="dashboardPage" class="page hidden">
-            <!-- Same as original dashboard page -->
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-header">
@@ -1543,7 +1734,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUser">admin_master_9281</h4>
+                        <h4 id="loggedInUser">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -1593,9 +1784,25 @@
                         <p>Welcome to your Onix control panel</p>
                     </div>
                     <div class="topbar-right">
-                        <div class="notifications">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge">3</span>
+                        <div class="notifications-container">
+                            <div class="notifications">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge">3</span>
+                            </div>
+                            <div class="notifications-dropdown">
+                                <div class="notification-item">
+                                    <div>✅ Swap completed: 1 ETH → 2980 USDT</div>
+                                    <div class="notification-time">2 minutes ago</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div>⚠️ Low balance in BTC wallet</div>
+                                    <div class="notification-time">1 hour ago</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div>🔔 New feature: Advanced trading tools</div>
+                                    <div class="notification-time">2 hours ago</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="date-display">
                             <i class="fas fa-calendar-alt"></i>
@@ -1614,7 +1821,7 @@
                             </div>
                             <div class="stat-info">
                                 <h3>Balance</h3>
-                                <p class="stat-value">$<span id="totalBalance">0.00</span></p>
+                                <p class="stat-value">$<span id="totalBalance">10,000.00</span></p>
                                 <p class="stat-change"><i class="fas fa-arrow-up"></i> <span id="balanceChange">0%</span></p>
                             </div>
                         </div>
@@ -1706,7 +1913,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="activityTableBody">
-                                    <!-- Will be loaded by JavaScript -->
                                     <tr id="noActivityRow">
                                         <td colspan="5" style="text-align: center; padding: 20px; color: #999;">
                                             No activities yet. Start trading to see your activities here.
@@ -1722,7 +1928,6 @@
 
         <!-- Wallet Page -->
         <div id="walletPage" class="page hidden">
-            <!-- Same as original wallet page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1736,7 +1941,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserWallet">admin_master_9281</h4>
+                        <h4 id="loggedInUserWallet">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -1784,9 +1989,21 @@
                         <p>Connect and manage your crypto wallets</p>
                     </div>
                     <div class="topbar-right">
-                        <div class="notifications">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge">2</span>
+                        <div class="notifications-container">
+                            <div class="notifications">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge">2</span>
+                            </div>
+                            <div class="notifications-dropdown">
+                                <div class="notification-item">
+                                    <div>✅ Swap completed: 1 ETH → 2980 USDT</div>
+                                    <div class="notification-time">2 minutes ago</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div>⚠️ Low balance in BTC wallet</div>
+                                    <div class="notification-time">1 hour ago</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="date-display">
                             <i class="fas fa-calendar-alt"></i>
@@ -1798,9 +2015,18 @@
                 <div class="dashboard-content">
                     <div class="operation-container">
                         <h2>Connect Your Wallet</h2>
+                        
+                        <div class="wallet-display" id="walletDisplay">
+                            <i class="fab fa-ethereum fa-2x"></i>
+                            <div style="flex: 1;">
+                                <h4 style="margin-bottom: 5px;">Ethereum Wallet</h4>
+                                <div class="wallet-status disconnected">Disconnected</div>
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <label>Select Wallet Type</label>
-                            <select class="form-select">
+                            <select class="form-select" id="walletType">
                                 <option>MetaMask</option>
                                 <option>Trust Wallet</option>
                                 <option>Coinbase Wallet</option>
@@ -1809,44 +2035,48 @@
                             </select>
                         </div>
                         
-                        <div class="form-group">
-                            <label>Wallet Address</label>
-                            <input type="text" placeholder="0x..." class="form-control">
-                        </div>
-                        
-                        <button id="connectWalletBtn" class="btn-primary btn-block">
+                        <button id="connectWalletBtn" class="btn-primary wallet-connect-btn">
                             <i class="fas fa-plug"></i> Connect Wallet
                         </button>
+                        
+                        <div class="form-info" style="margin-top: 1rem; text-align: center;">
+                            <small>By connecting your wallet, you agree to our Terms of Service</small>
+                        </div>
                     </div>
                     
-                    <div class="quick-actions">
-                        <h2>Connected Wallets</h2>
-                        <div class="actions-container">
-                            <div class="action-card">
-                                <div class="action-icon">
-                                    <i class="fab fa-ethereum"></i>
+                    <!-- Transaction History -->
+                    <div class="transaction-details-container">
+                        <h3>Recent Transactions</h3>
+                        <div class="transaction-list">
+                            <div class="transaction-list-item">
+                                <div>
+                                    <strong>ETH → USDT</strong><br>
+                                    <small>Swap - Completed</small>
                                 </div>
-                                <h4>Ethereum</h4>
-                                <p>0x1a2b...3c4d</p>
-                                <p class="wallet-balance">2.5 ETH</p>
+                                <div style="text-align: right;">
+                                    <div style="color: var(--success);">+2,980 USDT</div>
+                                    <small>10:30 AM</small>
+                                </div>
                             </div>
-                            
-                            <div class="action-card">
-                                <div class="action-icon">
-                                    <i class="fab fa-bitcoin"></i>
+                            <div class="transaction-list-item">
+                                <div>
+                                    <strong>BTC Deposit</strong><br>
+                                    <small>Deposit - Completed</small>
                                 </div>
-                                <h4>Bitcoin</h4>
-                                <p>bc1qxy...kg7g</p>
-                                <p class="wallet-balance">0.15 BTC</p>
+                                <div style="text-align: right;">
+                                    <div style="color: var(--success);">+0.15 BTC</div>
+                                    <small>Yesterday</small>
+                                </div>
                             </div>
-                            
-                            <div class="action-card">
-                                <div class="action-icon">
-                                    <i class="fas fa-coins"></i>
+                            <div class="transaction-list-item">
+                                <div>
+                                    <strong>BNB Withdrawal</strong><br>
+                                    <small>Withdrawal - Pending</small>
                                 </div>
-                                <h4>Binance Chain</h4>
-                                <p>bnb1...xyz</p>
-                                <p class="wallet-balance">150 BNB</p>
+                                <div style="text-align: right;">
+                                    <div style="color: var(--warning);">-50 BNB</div>
+                                    <small>2 days ago</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1856,7 +2086,6 @@
 
         <!-- Swap Page -->
         <div id="swapPage" class="page hidden">
-            <!-- Same as original swap page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -1870,7 +2099,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserSwap">admin_master_9281</h4>
+                        <h4 id="loggedInUserSwap">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -1918,9 +2147,17 @@
                         <p>Exchange cryptocurrencies instantly</p>
                     </div>
                     <div class="topbar-right">
-                        <div class="notifications">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge">1</span>
+                        <div class="notifications-container">
+                            <div class="notifications">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge">1</span>
+                            </div>
+                            <div class="notifications-dropdown">
+                                <div class="notification-item">
+                                    <div>✅ Swap completed: 1 ETH → 2980 USDT</div>
+                                    <div class="notification-time">2 minutes ago</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="date-display">
                             <i class="fas fa-calendar-alt"></i>
@@ -1936,16 +2173,20 @@
                             <div class="form-group">
                                 <label>From</label>
                                 <div class="form-row">
-                                    <div class="form-group" style="flex: 2;">
-                                        <input type="number" placeholder="Amount" class="form-control" required>
+                                    <div class="form-group balance-input" style="flex: 2;">
+                                        <input type="number" id="swapFromAmount" placeholder="Amount" class="form-control" value="1" required>
+                                        <div class="balance-info">
+                                            <span>Balance:</span>
+                                            <span id="fromBalance">2.5 ETH</span>
+                                        </div>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select class="form-select">
-                                            <option>ETH</option>
-                                            <option>BTC</option>
-                                            <option>USDT</option>
-                                            <option>BNB</option>
-                                            <option>SOL</option>
+                                        <select class="form-select" id="swapFromToken">
+                                            <option value="ETH" data-balance="2.5">ETH</option>
+                                            <option value="BTC" data-balance="0.15">BTC</option>
+                                            <option value="USDT" data-balance="10000">USDT</option>
+                                            <option value="BNB" data-balance="150">BNB</option>
+                                            <option value="SOL" data-balance="25">SOL</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1959,29 +2200,61 @@
                                 <label>To</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" placeholder="Amount" class="form-control" required>
+                                        <input type="number" id="swapToAmount" placeholder="Amount" class="form-control" value="2980.30" readonly>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
-                                        <select class="form-select">
-                                            <option>USDT</option>
-                                            <option>ETH</option>
-                                            <option>BTC</option>
-                                            <option>BNB</option>
-                                            <option>SOL</option>
+                                        <select class="form-select" id="swapToToken">
+                                            <option value="USDT">USDT</option>
+                                            <option value="ETH">ETH</option>
+                                            <option value="BTC">BTC</option>
+                                            <option value="BNB">BNB</option>
+                                            <option value="SOL">SOL</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="swap-info">
-                                <p>Exchange Rate: 1 ETH = 2,980.30 USDT</p>
-                                <p>Estimated Fees: $12.50</p>
+                            <!-- Swap Estimate -->
+                            <div class="swap-estimate">
+                                <div class="swap-estimate-item">
+                                    <span>Exchange Rate:</span>
+                                    <span class="swap-rate" id="exchangeRate">1 ETH = 2,980.30 USDT</span>
+                                </div>
+                                <div class="swap-estimate-item">
+                                    <span>Estimated Fees:</span>
+                                    <span id="estimatedFees">$12.50</span>
+                                </div>
+                                <div class="swap-estimate-item">
+                                    <span>Minimum Received:</span>
+                                    <span id="minimumReceived">2,967.80 USDT</span>
+                                </div>
                             </div>
                             
-                            <button type="submit" class="btn-primary btn-block">
-                                <i class="fas fa-exchange-alt"></i> Swap Now
+                            <button type="button" onclick="previewSwap()" class="btn-primary btn-block">
+                                <i class="fas fa-exchange-alt"></i> Preview Swap
                             </button>
+                            
+                            <div class="form-info" style="margin-top: 1rem; text-align: center;">
+                                <small>Preview your swap before confirming. Rates may change.</small>
+                            </div>
                         </form>
+                    </div>
+                    
+                    <!-- Transaction History -->
+                    <div class="transaction-details-container">
+                        <h3>Recent Swaps</h3>
+                        <div class="transaction-list" id="swapHistory">
+                            <div class="transaction-list-item">
+                                <div>
+                                    <strong>ETH → USDT</strong><br>
+                                    <small>Swap - Completed</small>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="color: var(--success);">+2,980 USDT</div>
+                                    <small>10:30 AM</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1989,7 +2262,6 @@
 
         <!-- Convert Page -->
         <div id="convertPage" class="page hidden">
-            <!-- Same as original convert page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -2003,7 +2275,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserConvert">admin_master_9281</h4>
+                        <h4 id="loggedInUserConvert">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -2051,9 +2323,16 @@
                         <p>Convert between crypto and fiat currencies</p>
                     </div>
                     <div class="topbar-right">
-                        <div class="notifications">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge">0</span>
+                        <div class="notifications-container">
+                            <div class="notifications">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge">0</span>
+                            </div>
+                            <div class="notifications-dropdown">
+                                <div class="notification-item">
+                                    <div>No new notifications</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="date-display">
                             <i class="fas fa-calendar-alt"></i>
@@ -2070,7 +2349,7 @@
                                 <label>From</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" placeholder="Amount" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" value="1" required>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
                                         <select class="form-select">
@@ -2092,7 +2371,7 @@
                                 <label>To</label>
                                 <div class="form-row">
                                     <div class="form-group" style="flex: 2;">
-                                        <input type="number" placeholder="Amount" class="form-control" required>
+                                        <input type="number" placeholder="Amount" class="form-control" value="43250.75" readonly>
                                     </div>
                                     <div class="form-group" style="flex: 1;">
                                         <select class="form-select">
@@ -2122,7 +2401,6 @@
 
         <!-- Trade Page -->
         <div id="tradePage" class="page hidden">
-            <!-- Same as original trade page -->
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo" onclick="showPage('homePage')">
@@ -2136,7 +2414,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserTrade">admin_master_9281</h4>
+                        <h4 id="loggedInUserTrade">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -2184,9 +2462,21 @@
                         <p>Advanced crypto trading</p>
                     </div>
                     <div class="topbar-right">
-                        <div class="notifications">
-                            <i class="fas fa-bell"></i>
-                            <span class="badge">5</span>
+                        <div class="notifications-container">
+                            <div class="notifications">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge">5</span>
+                            </div>
+                            <div class="notifications-dropdown">
+                                <div class="notification-item">
+                                    <div>✅ Trade executed: BTC/USDT Buy 0.1 BTC</div>
+                                    <div class="notification-time">30 minutes ago</div>
+                                </div>
+                                <div class="notification-item">
+                                    <div>⚠️ Stop loss triggered: ETH/USDT</div>
+                                    <div class="notification-time">2 hours ago</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="date-display">
                             <i class="fas fa-calendar-alt"></i>
@@ -2301,7 +2591,7 @@
                         <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="user-details">
-                        <h4 id="loggedInUserProfile">admin_master_9281</h4>
+                        <h4 id="loggedInUserProfile">admin_master_928</h4>
                         <p>Premium Member</p>
                     </div>
                 </div>
@@ -2362,7 +2652,7 @@
                             <i class="fas fa-user-circle"></i>
                         </div>
                         <div class="profile-info">
-                            <h2>admin_master_9281</h2>
+                            <h2>admin_master_928</h2>
                             <p>Premium Member since December 2023</p>
                         </div>
                     </div>
@@ -2372,7 +2662,7 @@
                             <h3>Account Information</h3>
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" value="admin_master_9281" class="form-control" readonly>
+                                <input type="text" value="admin_master_928" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -2406,987 +2696,452 @@
     </div>
 
     <script>
-        // Professional Trading Platform - Complete System
-        // ==============================================
-
-        // Configuration
-        const CONFIG = {
-            APP_NAME: 'ONIX Trading Platform',
-            VERSION: '1.0.0',
-            DEFAULT_USER: {
-                username: 'admin_master_9281',
-                password: 'Xv9!eP@73Qz#LmA2rT',
-                email: 'admin@onixplatform.com',
-                role: 'admin',
-                balance: 10000,
-                joined: new Date().toISOString()
-            },
-            CURRENCIES: ['USD', 'EUR', 'GBP', 'JPY'],
-            CRYPTOS: ['BTC', 'ETH', 'BNB', 'SOL', 'ADA', 'XRP', 'DOT', 'DOGE'],
-            FEES: {
-                swap: 0.003, // 0.3%
-                convert: 0.005, // 0.5%
-                trade: 0.001, // 0.1%
-                withdraw: 0.01 // 1%
-            },
-            STORAGE_KEYS: {
-                USERS: 'onix_users',
-                TRANSACTIONS: 'onix_transactions',
-                WALLETS: 'onix_wallets',
-                SETTINGS: 'onix_settings',
-                SESSION: 'onix_session'
-            }
+        // Application State
+        let currentUser = {
+            username: 'admin_master_928',
+            balance: 10000,
+            walletConnected: false,
+            walletAddress: null,
+            walletType: null
         };
 
-        // Application State
-        class AppState {
-            constructor() {
-                this.currentUser = null;
-                this.users = this.loadUsers();
-                this.transactions = this.loadTransactions();
-                this.wallets = this.loadWallets();
-                this.settings = this.loadSettings();
-                this.session = this.loadSession();
-                
-                // Initialize default data if empty
-                this.initializeData();
-            }
-
-            // Data persistence methods
-            loadUsers() {
-                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.USERS);
-                return data ? JSON.parse(data) : [];
-            }
-
-            loadTransactions() {
-                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.TRANSACTIONS);
-                return data ? JSON.parse(data) : [];
-            }
-
-            loadWallets() {
-                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.WALLETS);
-                return data ? JSON.parse(data) : [];
-            }
-
-            loadSettings() {
-                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.SETTINGS);
-                return data ? JSON.parse(data) : {
-                    theme: 'dark',
-                    currency: 'USD',
-                    language: 'en',
-                    notifications: true
-                };
-            }
-
-            loadSession() {
-                const data = localStorage.getItem(CONFIG.STORAGE_KEYS.SESSION);
-                return data ? JSON.parse(data) : { isLoggedIn: false, userId: null };
-            }
-
-            saveUsers() {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.USERS, JSON.stringify(this.users));
-            }
-
-            saveTransactions() {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.TRANSACTIONS, JSON.stringify(this.transactions));
-            }
-
-            saveWallets() {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.WALLETS, JSON.stringify(this.wallets));
-            }
-
-            saveSettings() {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.SETTINGS, JSON.stringify(this.settings));
-            }
-
-            saveSession() {
-                localStorage.setItem(CONFIG.STORAGE_KEYS.SESSION, JSON.stringify(this.session));
-            }
-
-            // Initialize default data
-            initializeData() {
-                if (this.users.length === 0) {
-                    this.users.push(CONFIG.DEFAULT_USER);
-                    this.saveUsers();
-                }
-
-                if (this.wallets.length === 0) {
-                    const defaultWallets = [
-                        {
-                            userId: CONFIG.DEFAULT_USER.username,
-                            type: 'ethereum',
-                            address: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
-                            balances: {
-                                ETH: 2.5,
-                                BTC: 0.15,
-                                USDT: 10000,
-                                BNB: 150
-                            }
-                        }
-                    ];
-                    this.wallets = defaultWallets;
-                    this.saveWallets();
-                }
-            }
-
-            // User management
-            login(username, password) {
-                const user = this.users.find(u => 
-                    u.username === username && u.password === password
-                );
-                
-                if (user) {
-                    this.currentUser = user;
-                    this.session = {
-                        isLoggedIn: true,
-                        userId: user.username,
-                        loginTime: new Date().toISOString()
-                    };
-                    this.saveSession();
-                    return true;
-                }
-                return false;
-            }
-
-            logout() {
-                this.currentUser = null;
-                this.session = { isLoggedIn: false, userId: null };
-                this.saveSession();
-            }
-
-            getCurrentUser() {
-                return this.currentUser || this.users.find(u => u.username === this.session.userId);
-            }
-
-            // Transaction management
-            addTransaction(type, details, amount, status = 'completed', fee = 0) {
-                const transaction = {
-                    id: Date.now().toString(),
-                    userId: this.getCurrentUser().username,
-                    type,
-                    details,
-                    amount,
-                    fee,
-                    status,
-                    timestamp: new Date().toISOString()
-                };
-                
-                this.transactions.push(transaction);
-                this.saveTransactions();
-                return transaction;
-            }
-
-            getUserTransactions() {
-                const userId = this.getCurrentUser().username;
-                return this.transactions.filter(t => t.userId === userId)
-                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            }
-
-            // Wallet management
-            getUserWallets() {
-                const userId = this.getCurrentUser().username;
-                return this.wallets.filter(w => w.userId === userId);
-            }
-
-            updateWalletBalance(walletId, currency, amount) {
-                const wallet = this.wallets.find(w => w.id === walletId);
-                if (wallet) {
-                    if (!wallet.balances[currency]) {
-                        wallet.balances[currency] = 0;
-                    }
-                    wallet.balances[currency] += amount;
-                    this.saveWallets();
-                }
-            }
-
-            // Statistics
-            getUserStats() {
-                const userId = this.getCurrentUser().username;
-                const userTransactions = this.getUserTransactions();
-                
-                const today = new Date().toDateString();
-                const todayTransactions = userTransactions.filter(t => 
-                    new Date(t.timestamp).toDateString() === today
-                );
-
-                return {
-                    totalBalance: this.getCurrentUser().balance || 0,
-                    swapsToday: todayTransactions.filter(t => t.type === 'swap').length,
-                    conversions: todayTransactions.filter(t => t.type === 'convert').length,
-                    trades: todayTransactions.filter(t => t.type === 'trade').length
-                };
-            }
-        }
-
-        // Price Engine - Simulates live market data
-        class PriceEngine {
-            constructor() {
-                this.prices = {
-                    BTC: { price: 43250.75, change: 2.5 },
-                    ETH: { price: 2980.30, change: 1.8 },
-                    BNB: { price: 305.75, change: -0.5 },
-                    SOL: { price: 102.40, change: 3.7 },
-                    ADA: { price: 0.52, change: 5.2 },
-                    XRP: { price: 0.75, change: 0.8 },
-                    DOT: { price: 7.25, change: -1.2 },
-                    DOGE: { price: 0.078, change: 8.5 }
-                };
-                
-                this.startPriceUpdates();
-            }
-
-            startPriceUpdates() {
-                // Update prices every 30 seconds
-                setInterval(() => {
-                    this.updatePrices();
-                    if (typeof window.updatePriceDisplay === 'function') {
-                        window.updatePriceDisplay();
-                    }
-                }, 30000);
-            }
-
-            updatePrices() {
-                Object.keys(this.prices).forEach(symbol => {
-                    const change = (Math.random() - 0.5) * 2; // -1% to +1%
-                    this.prices[symbol].price *= (1 + change / 100);
-                    this.prices[symbol].change = change;
-                });
-            }
-
-            getPrice(symbol) {
-                return this.prices[symbol] || { price: 0, change: 0 };
-            }
-
-            getExchangeRate(from, to) {
-                const fromPrice = this.getPrice(from).price;
-                const toPrice = this.getPrice(to).price;
-                
-                if (from === 'USD') return 1 / toPrice;
-                if (to === 'USD') return fromPrice;
-                
-                return fromPrice / toPrice;
-            }
-        }
+        let transactions = [
+            { type: 'swap', details: 'ETH → USDT', amount: 2980, status: 'completed', time: '10:30 AM' },
+            { type: 'deposit', details: 'BTC Deposit', amount: 0.15, status: 'completed', time: 'Yesterday' },
+            { type: 'withdrawal', details: 'BNB Withdrawal', amount: 50, status: 'pending', time: '2 days ago' }
+        ];
 
         // Notification System
-        class NotificationSystem {
-            constructor() {
-                this.container = document.getElementById('notificationContainer');
-                if (!this.container) {
-                    this.container = document.createElement('div');
-                    this.container.id = 'notificationContainer';
-                    document.body.appendChild(this.container);
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.add('hidden'));
+            
+            // Show requested page
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.remove('hidden');
+                
+                // Update page-specific data
+                if (pageId === 'dashboardPage') {
+                    updateDashboard();
+                } else if (pageId === 'walletPage') {
+                    updateWalletPage();
+                } else if (pageId === 'swapPage') {
+                    updateSwapPage();
                 }
-            }
-
-            show(message, type = 'info', duration = 5000) {
-                const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
-                notification.textContent = message;
                 
-                this.container.appendChild(notification);
-                
-                // Auto remove after duration
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.remove();
-                    }
-                }, duration);
-                
-                return notification;
-            }
-
-            success(message) {
-                return this.show(message, 'success');
-            }
-
-            error(message) {
-                return this.show(message, 'error');
-            }
-
-            warning(message) {
-                return this.show(message, 'warning');
-            }
-
-            info(message) {
-                return this.show(message, 'info');
+                updateCurrentDate();
+                updateUserInfo();
             }
         }
 
-        // Trading Engine
-        class TradingEngine {
-            constructor(appState, priceEngine) {
-                this.appState = appState;
-                this.priceEngine = priceEngine;
-                this.notification = new NotificationSystem();
-            }
-
-            // Swap tokens
-            async swap(fromAmount, fromToken, toToken) {
-                try {
-                    this.notification.info('Processing swap...');
-                    
-                    // Simulate API delay
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    
-                    const exchangeRate = this.priceEngine.getExchangeRate(fromToken, toToken);
-                    const fee = fromAmount * exchangeRate * CONFIG.FEES.swap;
-                    const receivedAmount = fromAmount * exchangeRate - fee;
-                    
-                    // Add transaction
-                    this.appState.addTransaction(
-                        'swap',
-                        `${fromToken} to ${toToken}`,
-                        receivedAmount,
-                        'completed',
-                        fee
-                    );
-                    
-                    // Update user balance
-                    const user = this.appState.getCurrentUser();
-                    user.balance += receivedAmount * 0.01; // Add small commission
-                    
-                    this.notification.success(`Swap completed! Received ${receivedAmount.toFixed(4)} ${toToken}`);
-                    return { success: true, amount: receivedAmount, fee };
-                    
-                } catch (error) {
-                    this.notification.error('Swap failed: ' + error.message);
-                    return { success: false, error: error.message };
+        function scrollToSection(sectionId) {
+            showPage('homePage');
+            setTimeout(() => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
-
-            // Convert currency
-            async convert(amount, fromCurrency, toCurrency) {
-                try {
-                    this.notification.info('Processing conversion...');
-                    
-                    await new Promise(resolve => setTimeout(resolve, 1500));
-                    
-                    let exchangeRate;
-                    if (['USD', 'EUR', 'GBP', 'JPY'].includes(fromCurrency) && 
-                        ['USD', 'EUR', 'GBP', 'JPY'].includes(toCurrency)) {
-                        // Fiat to fiat
-                        exchangeRate = this.getFiatRate(fromCurrency, toCurrency);
-                    } else {
-                        // Crypto to fiat or vice versa
-                        exchangeRate = this.priceEngine.getExchangeRate(
-                            fromCurrency === 'USD' ? 'USDT' : fromCurrency,
-                            toCurrency === 'USD' ? 'USDT' : toCurrency
-                        );
-                    }
-                    
-                    const fee = amount * exchangeRate * CONFIG.FEES.convert;
-                    const receivedAmount = amount * exchangeRate - fee;
-                    
-                    this.appState.addTransaction(
-                        'convert',
-                        `${fromCurrency} to ${toCurrency}`,
-                        receivedAmount,
-                        'completed',
-                        fee
-                    );
-                    
-                    this.notification.success(`Conversion completed! Received ${receivedAmount.toFixed(2)} ${toCurrency}`);
-                    return { success: true, amount: receivedAmount, fee };
-                    
-                } catch (error) {
-                    this.notification.error('Conversion failed: ' + error.message);
-                    return { success: false, error: error.message };
-                }
-            }
-
-            // Place trade order
-            async trade(orderType, asset, side, amount, price = null) {
-                try {
-                    this.notification.info('Placing trade order...');
-                    
-                    await new Promise(resolve => setTimeout(resolve, 2500));
-                    
-                    const fee = amount * (price || this.priceEngine.getPrice(asset.split('/')[0]).price) * CONFIG.FEES.trade;
-                    
-                    this.appState.addTransaction(
-                        'trade',
-                        `${side.toUpperCase()} ${asset} (${orderType})`,
-                        amount,
-                        'completed',
-                        fee
-                    );
-                    
-                    this.notification.success(`Trade ${side} order executed successfully!`);
-                    return { success: true, fee };
-                    
-                } catch (error) {
-                    this.notification.error('Trade failed: ' + error.message);
-                    return { success: false, error: error.message };
-                }
-            }
-
-            getFiatRate(from, to) {
-                const rates = {
-                    USD: { EUR: 0.92, GBP: 0.79, JPY: 110.5 },
-                    EUR: { USD: 1.085, GBP: 0.865, JPY: 120.3 },
-                    GBP: { USD: 1.265, EUR: 1.155, JPY: 139.2 },
-                    JPY: { USD: 0.00905, EUR: 0.00831, GBP: 0.00718 }
-                };
-                return rates[from] && rates[from][to] ? rates[from][to] : 1;
-            }
+            }, 100);
         }
 
-        // UI Manager
-        class UIManager {
-            constructor(appState, tradingEngine) {
-                this.appState = appState;
-                this.tradingEngine = tradingEngine;
-                this.notification = new NotificationSystem();
-                this.priceEngine = new PriceEngine();
-            }
+        // Update Current Date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-US', options);
+            
+            document.querySelectorAll('[id^="currentDate"]').forEach(el => {
+                el.textContent = dateString;
+            });
+        }
 
-            // Page navigation
-            showPage(pageId) {
-                const pages = document.querySelectorAll('.page');
-                pages.forEach(page => page.classList.add('hidden'));
-                
-                const targetPage = document.getElementById(pageId);
-                if (targetPage) {
-                    targetPage.classList.remove('hidden');
-                    
-                    // Check authentication for protected pages
-                    const protectedPages = ['dashboardPage', 'walletPage', 'swapPage', 'convertPage', 'tradePage', 'profilePage'];
-                    if (protectedPages.includes(pageId) && !this.appState.session.isLoggedIn) {
-                        this.showPage('loginPage');
-                        return;
-                    }
-                    
-                    this.updatePageData(pageId);
-                }
-            }
+        // Update User Info
+        function updateUserInfo() {
+            document.querySelectorAll('[id^="loggedInUser"]').forEach(el => {
+                el.textContent = currentUser.username;
+            });
+            
+            document.getElementById('totalBalance').textContent = currentUser.balance.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
 
-            updatePageData(pageId) {
-                this.updateUserInfo();
-                this.updateDates();
-                
-                switch (pageId) {
-                    case 'dashboardPage':
-                        this.updateDashboard();
-                        break;
-                    case 'coinsPage':
-                        this.loadCoins();
-                        break;
-                    case 'swapPage':
-                        this.updateSwapEstimate();
-                        break;
-                    case 'convertPage':
-                        this.updateConvertEstimate();
-                        break;
-                }
-            }
-
-            updateUserInfo() {
-                const user = this.appState.getCurrentUser();
-                if (user) {
-                    const userElements = document.querySelectorAll('[id^="loggedInUser"]');
-                    userElements.forEach(el => {
-                        el.textContent = user.username;
-                    });
-                }
-            }
-
-            updateDates() {
-                const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const dateString = now.toLocaleDateString('en-US', options);
-                
-                const dateElements = document.querySelectorAll('[id^="currentDate"]');
-                dateElements.forEach(el => {
-                    el.textContent = dateString;
-                });
-            }
-
-            updateDashboard() {
-                const stats = this.appState.getUserStats();
-                
-                document.getElementById('totalBalance').textContent = stats.totalBalance.toFixed(2);
-                document.getElementById('swapsCount').textContent = stats.swapsToday;
-                document.getElementById('conversionsCount').textContent = stats.conversions;
-                document.getElementById('tradesCount').textContent = stats.trades;
-                
-                this.updateActivityTable();
-                this.updateNotificationBadge();
-            }
-
-            updateActivityTable() {
-                const tableBody = document.getElementById('activityTableBody');
-                const noActivityRow = document.getElementById('noActivityRow');
-                
-                const transactions = this.appState.getUserTransactions().slice(0, 5);
-                
-                if (transactions.length === 0) {
-                    if (noActivityRow) noActivityRow.style.display = '';
-                    return;
-                }
-                
-                if (noActivityRow) noActivityRow.style.display = 'none';
-                
-                tableBody.innerHTML = '';
+        // Update Dashboard
+        function updateDashboard() {
+            // Update activity table
+            const tableBody = document.getElementById('activityTableBody');
+            if (transactions.length > 0) {
+                let html = '';
                 transactions.forEach(transaction => {
-                    const row = document.createElement('tr');
-                    const time = new Date(transaction.timestamp).toLocaleTimeString([], { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                    });
-                    
-                    row.innerHTML = `
-                        <td><span class="activity-type ${transaction.type}">${transaction.type}</span></td>
-                        <td>${transaction.details}</td>
-                        <td>${transaction.amount.toFixed(4)}</td>
-                        <td><span class="status ${transaction.status}">${transaction.status}</span></td>
-                        <td>${time}</td>
+                    html += `
+                        <tr>
+                            <td><span class="activity-type ${transaction.type}">${transaction.type}</span></td>
+                            <td>${transaction.details}</td>
+                            <td>${transaction.amount}</td>
+                            <td><span class="status ${transaction.status}">${transaction.status}</span></td>
+                            <td>${transaction.time}</td>
+                        </tr>
                     `;
-                    tableBody.appendChild(row);
                 });
+                tableBody.innerHTML = html;
             }
+        }
 
-            updateNotificationBadge() {
-                const transactions = this.appState.getUserTransactions();
-                const unread = transactions.filter(t => 
-                    t.status === 'pending' || 
-                    new Date(t.timestamp) > new Date(Date.now() - 24 * 60 * 60 * 1000)
-                ).length;
+        // Wallet Page Functions
+        function updateWalletPage() {
+            const walletDisplay = document.getElementById('walletDisplay');
+            if (currentUser.walletConnected) {
+                walletDisplay.innerHTML = `
+                    <i class="fab fa-ethereum fa-2x"></i>
+                    <div style="flex: 1;">
+                        <h4 style="margin-bottom: 5px;">Ethereum Wallet</h4>
+                        <div class="wallet-status connected">Connected ✓</div>
+                        <small style="color: var(--gray); font-family: monospace;">${currentUser.walletAddress}</small>
+                        <div style="margin-top: 10px;">
+                            <button class="btn-secondary" onclick="disconnectWallet()" style="padding: 5px 15px; font-size: 0.9rem;">
+                                <i class="fas fa-unlink"></i> Disconnect
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                walletDisplay.innerHTML = `
+                    <i class="fab fa-ethereum fa-2x"></i>
+                    <div style="flex: 1;">
+                        <h4 style="margin-bottom: 5px;">Ethereum Wallet</h4>
+                        <div class="wallet-status disconnected">Disconnected</div>
+                    </div>
+                `;
+            }
+        }
+
+        function connectWallet() {
+            const walletType = document.getElementById('walletType').value;
+            
+            // Simulate wallet connection
+            showNotification(`Connecting ${walletType}...`, 'info');
+            
+            setTimeout(() => {
+                // Generate mock wallet address
+                const address = '0x' + Array.from({length: 40}, () => 
+                    Math.floor(Math.random() * 16).toString(16)
+                ).join('');
                 
-                const badges = document.querySelectorAll('.badge');
-                badges.forEach(badge => {
-                    badge.textContent = Math.min(unread, 9);
+                currentUser.walletConnected = true;
+                currentUser.walletAddress = address;
+                currentUser.walletType = walletType;
+                
+                updateWalletPage();
+                showNotification(`${walletType} connected successfully!`, 'success');
+                
+                // Add transaction
+                transactions.unshift({
+                    type: 'wallet',
+                    details: `${walletType} Connected`,
+                    amount: 0,
+                    status: 'completed',
+                    time: 'Just now'
                 });
-            }
-
-            loadCoins() {
-                const container = document.getElementById('coinsContainer');
-                if (!container) return;
                 
+                updateDashboard();
+            }, 2000);
+        }
+
+        function disconnectWallet() {
+            currentUser.walletConnected = false;
+            currentUser.walletAddress = null;
+            currentUser.walletType = null;
+            
+            updateWalletPage();
+            showNotification('Wallet disconnected', 'info');
+        }
+
+        // Swap Page Functions
+        function updateSwapPage() {
+            const fromToken = document.getElementById('swapFromToken');
+            const balance = fromToken.options[fromToken.selectedIndex].getAttribute('data-balance');
+            const token = fromToken.value;
+            document.getElementById('fromBalance').textContent = `${balance} ${token}`;
+            
+            // Update exchange rate
+            updateSwapEstimate();
+        }
+
+        function updateSwapEstimate() {
+            const fromAmount = parseFloat(document.getElementById('swapFromAmount').value) || 0;
+            const fromToken = document.getElementById('swapFromToken').value;
+            const toToken = document.getElementById('swapToToken').value;
+            
+            // Exchange rates (simulated)
+            const rates = {
+                'ETH': { 'USDT': 2980.30, 'BTC': 0.068, 'BNB': 9.76, 'SOL': 29.1 },
+                'BTC': { 'USDT': 43250.75, 'ETH': 14.7, 'BNB': 141.5, 'SOL': 425.8 },
+                'USDT': { 'ETH': 0.000336, 'BTC': 0.000023, 'BNB': 0.00328, 'SOL': 0.0098 },
+                'BNB': { 'USDT': 305.75, 'ETH': 0.1025, 'BTC': 0.00706, 'SOL': 2.98 },
+                'SOL': { 'USDT': 102.40, 'ETH': 0.0343, 'BTC': 0.00235, 'BNB': 0.336 }
+            };
+            
+            const exchangeRate = rates[fromToken] && rates[fromToken][toToken] ? rates[fromToken][toToken] : 1;
+            const estimatedAmount = fromAmount * exchangeRate;
+            const fee = estimatedAmount * 0.003; // 0.3% fee
+            const receivedAmount = estimatedAmount - fee;
+            
+            document.getElementById('swapToAmount').value = receivedAmount.toFixed(6);
+            document.getElementById('exchangeRate').textContent = `1 ${fromToken} = ${exchangeRate.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})} ${toToken}`;
+            document.getElementById('estimatedFees').textContent = `$${fee.toFixed(2)}`;
+            document.getElementById('minimumReceived').textContent = `${receivedAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${toToken}`;
+        }
+
+        function previewSwap() {
+            const fromAmount = parseFloat(document.getElementById('swapFromAmount').value);
+            const fromToken = document.getElementById('swapFromToken').value;
+            const toToken = document.getElementById('swapToToken').value;
+            const toAmount = parseFloat(document.getElementById('swapToAmount').value);
+            const fee = document.getElementById('estimatedFees').textContent;
+            
+            if (!fromAmount || fromAmount <= 0) {
+                showNotification('Please enter a valid amount', 'error');
+                return;
+            }
+            
+            // Check balance
+            const balance = parseFloat(document.getElementById('swapFromToken').options[document.getElementById('swapFromToken').selectedIndex].getAttribute('data-balance'));
+            if (fromAmount > balance) {
+                showNotification(`Insufficient ${fromToken} balance!`, 'error');
+                return;
+            }
+            
+            // Show confirmation modal
+            document.getElementById('swapDetails').innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--dark); margin-bottom: 1rem;">Swap Details</h3>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary); margin: 1rem 0;">
+                        ${fromAmount} ${fromToken} → ${toAmount.toFixed(2)} ${toToken}
+                    </div>
+                    <div style="background: var(--light); padding: 1rem; border-radius: 8px; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Exchange Rate:</span>
+                            <span style="font-weight: bold;">1 ${fromToken} = ${(toAmount/fromAmount).toFixed(2)} ${toToken}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Fee:</span>
+                            <span>${fee}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Network:</span>
+                            <span>Ethereum Mainnet</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showModal('swapModal');
+        }
+
+        function confirmSwap() {
+            const fromAmount = parseFloat(document.getElementById('swapFromAmount').value);
+            const fromToken = document.getElementById('swapFromToken').value;
+            const toToken = document.getElementById('swapToToken').value;
+            const toAmount = parseFloat(document.getElementById('swapToAmount').value);
+            
+            // Update balance
+            const fromSelect = document.getElementById('swapFromToken');
+            const currentBalance = parseFloat(fromSelect.options[fromSelect.selectedIndex].getAttribute('data-balance'));
+            const newBalance = currentBalance - fromAmount;
+            fromSelect.options[fromSelect.selectedIndex].setAttribute('data-balance', newBalance.toFixed(2));
+            
+            // Update user balance (add value of received tokens)
+            currentUser.balance += toAmount * 0.01; // Small commission
+            
+            // Add transaction
+            transactions.unshift({
+                type: 'swap',
+                details: `${fromToken} → ${toToken}`,
+                amount: toAmount,
+                status: 'completed',
+                time: 'Just now'
+            });
+            
+            // Update UI
+            updateUserInfo();
+            updateSwapPage();
+            updateDashboard();
+            
+            // Update swap history
+            const swapHistory = document.getElementById('swapHistory');
+            swapHistory.innerHTML = `
+                <div class="transaction-list-item">
+                    <div>
+                        <strong>${fromToken} → ${toToken}</strong><br>
+                        <small>Swap - Completed</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: var(--success);">+${toAmount.toFixed(2)} ${toToken}</div>
+                        <small>Just now</small>
+                    </div>
+                </div>
+                ${swapHistory.innerHTML}
+            `;
+            
+            // Close modal and show success
+            hideModal('swapModal');
+            showNotification(`Swap completed! Received ${toAmount.toFixed(2)} ${toToken}`, 'success');
+            
+            // Update swaps count
+            const swapsCount = document.getElementById('swapsCount');
+            swapsCount.textContent = parseInt(swapsCount.textContent) + 1;
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Login Form
+        document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (username === 'admin_master_928' && password === 'password123') {
+                showNotification('Login successful!', 'success');
+                setTimeout(() => {
+                    showPage('dashboardPage');
+                }, 1000);
+            } else {
+                showNotification('Invalid username or password', 'error');
+            }
+        });
+
+        // Password visibility toggle
+        document.getElementById('togglePassword')?.addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize
+            updateCurrentDate();
+            updateUserInfo();
+            updateSwapPage();
+            
+            // Wallet connection
+            document.getElementById('connectWalletBtn')?.addEventListener('click', connectWallet);
+            
+            // Swap form updates
+            document.getElementById('swapFromToken')?.addEventListener('change', updateSwapPage);
+            document.getElementById('swapToToken')?.addEventListener('change', updateSwapEstimate);
+            document.getElementById('swapFromAmount')?.addEventListener('input', updateSwapEstimate);
+            
+            // Logout buttons
+            document.querySelectorAll('[id^="logoutBtn"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    showNotification('Logged out successfully', 'info');
+                    showPage('loginPage');
+                });
+            });
+            
+            // Forgot password
+            document.querySelectorAll('.forgot-password').forEach(link => {
+                link.addEventListener('click', function() {
+                    showNotification('Password reset instructions sent to email', 'info');
+                });
+            });
+            
+            // Load coins
+            loadCoins();
+        });
+
+        // Load Coins
+        function loadCoins() {
+            const coins = [
+                { symbol: 'BTC', name: 'Bitcoin', price: 43250.75, change: 2.5, marketCap: '$845.2B' },
+                { symbol: 'ETH', name: 'Ethereum', price: 2980.30, change: 1.8, marketCap: '$358.4B' },
+                { symbol: 'BNB', name: 'Binance Coin', price: 305.75, change: -0.5, marketCap: '$47.2B' },
+                { symbol: 'SOL', name: 'Solana', price: 102.40, change: 3.7, marketCap: '$44.8B' },
+                { symbol: 'ADA', name: 'Cardano', price: 0.52, change: 5.2, marketCap: '$18.5B' },
+                { symbol: 'XRP', name: 'Ripple', price: 0.75, change: 0.8, marketCap: '$34.2B' }
+            ];
+            
+            const container = document.getElementById('coinsContainer');
+            if (container) {
                 container.innerHTML = '';
-                
-                Object.entries(this.priceEngine.prices).forEach(([symbol, data]) => {
+                coins.forEach(coin => {
                     const coinCard = document.createElement('div');
                     coinCard.className = 'coin-card';
-                    
                     coinCard.innerHTML = `
                         <div class="coin-header">
                             <div class="coin-icon">
-                                <i class="fab fa-${symbol.toLowerCase()}"></i>
+                                <i class="fab fa-${coin.symbol.toLowerCase()}"></i>
                             </div>
                             <div class="coin-name">
-                                <h3>${this.getCoinName(symbol)}</h3>
-                                <span class="coin-symbol">${symbol}</span>
+                                <h3>${coin.name}</h3>
+                                <span class="coin-symbol">${coin.symbol}</span>
                             </div>
                         </div>
-                        <div class="coin-price">$${data.price.toFixed(2)}</div>
-                        <div class="coin-change ${data.change >= 0 ? 'positive' : 'negative'}">
-                            <i class="fas fa-${data.change >= 0 ? 'arrow-up' : 'arrow-down'}"></i>
-                            <span>${data.change >= 0 ? '+' : ''}${data.change.toFixed(2)}%</span>
+                        <div class="coin-price">$${coin.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                        <div class="coin-change ${coin.change >= 0 ? 'positive' : 'negative'}">
+                            <i class="fas fa-${coin.change >= 0 ? 'arrow-up' : 'arrow-down'}"></i>
+                            <span>${coin.change >= 0 ? '+' : ''}${coin.change.toFixed(2)}%</span>
                         </div>
                         <div class="coin-details">
                             <div class="coin-detail">
                                 <span>Market Cap</span>
-                                <span>${this.formatMarketCap(symbol)}</span>
+                                <span>${coin.marketCap}</span>
                             </div>
                             <div class="coin-detail">
                                 <span>24h Volume</span>
-                                <span>${this.formatVolume(symbol)}</span>
+                                <span>$${(coin.price * 1000000).toLocaleString('en-US', {maximumFractionDigits: 0})}</span>
                             </div>
                         </div>
                     `;
-                    
                     container.appendChild(coinCard);
                 });
             }
-
-            updateSwapEstimate() {
-                const fromToken = document.getElementById('swapFromToken').value;
-                const toToken = document.getElementById('swapToToken').value;
-                const fromAmount = parseFloat(document.getElementById('swapFromAmount').value) || 0;
-                
-                const exchangeRate = this.priceEngine.getExchangeRate(fromToken, toToken);
-                const estimatedAmount = fromAmount * exchangeRate * (1 - CONFIG.FEES.swap);
-                
-                document.getElementById('swapToAmount').value = estimatedAmount.toFixed(6);
-                
-                const exchangeRateElement = document.querySelector('#exchangeRate');
-                if (exchangeRateElement) {
-                    exchangeRateElement.textContent = `1 ${fromToken} = ${exchangeRate.toFixed(2)} ${toToken}`;
-                }
-                
-                const feesElement = document.querySelector('#estimatedFees');
-                if (feesElement) {
-                    feesElement.textContent = `$${(fromAmount * exchangeRate * CONFIG.FEES.swap).toFixed(2)}`;
-                }
-            }
-
-            updateConvertEstimate() {
-                const fromCurrency = document.getElementById('convertFromCurrency').value;
-                const toCurrency = document.getElementById('convertToCurrency').value;
-                const fromAmount = parseFloat(document.getElementById('convertFromAmount').value) || 0;
-                
-                let exchangeRate;
-                if (['USD', 'EUR', 'GBP', 'JPY'].includes(fromCurrency) && 
-                    ['USD', 'EUR', 'GBP', 'JPY'].includes(toCurrency)) {
-                    exchangeRate = this.tradingEngine.getFiatRate(fromCurrency, toCurrency);
-                } else {
-                    exchangeRate = this.priceEngine.getExchangeRate(
-                        fromCurrency === 'USD' ? 'USDT' : fromCurrency,
-                        toCurrency === 'USD' ? 'USDT' : toCurrency
-                    );
-                }
-                
-                const estimatedAmount = fromAmount * exchangeRate * (1 - CONFIG.FEES.convert);
-                document.getElementById('convertToAmount').value = estimatedAmount.toFixed(2);
-                
-                const rateElement = document.querySelector('#convertRate');
-                if (rateElement) {
-                    rateElement.textContent = `1 ${fromCurrency} = ${exchangeRate.toFixed(2)} ${toCurrency}`;
-                }
-                
-                const feesElement = document.querySelector('#convertFees');
-                if (feesElement) {
-                    feesElement.textContent = `$${(fromAmount * exchangeRate * CONFIG.FEES.convert).toFixed(2)}`;
-                }
-            }
-
-            // Helper methods
-            getCoinName(symbol) {
-                const names = {
-                    BTC: 'Bitcoin',
-                    ETH: 'Ethereum',
-                    BNB: 'Binance Coin',
-                    SOL: 'Solana',
-                    ADA: 'Cardano',
-                    XRP: 'Ripple',
-                    DOT: 'Polkadot',
-                    DOGE: 'Dogecoin'
-                };
-                return names[symbol] || symbol;
-            }
-
-            formatMarketCap(symbol) {
-                const caps = {
-                    BTC: '$845.2B',
-                    ETH: '$358.4B',
-                    BNB: '$47.2B',
-                    SOL: '$44.8B',
-                    ADA: '$18.5B',
-                    XRP: '$34.2B',
-                    DOT: '$9.3B',
-                    DOGE: '$11.2B'
-                };
-                return caps[symbol] || '$0.00';
-            }
-
-            formatVolume(symbol) {
-                const volumes = {
-                    BTC: '$32.5B',
-                    ETH: '$18.7B',
-                    BNB: '$1.2B',
-                    SOL: '$2.1B',
-                    ADA: '$450M',
-                    XRP: '$1.8B',
-                    DOT: '$280M',
-                    DOGE: '$650M'
-                };
-                return volumes[symbol] || '$0.00';
-            }
-
-            scrollToSection(sectionId) {
-                this.showPage('homePage');
-                setTimeout(() => {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 100);
-            }
         }
 
-        // Initialize Application
-        class Application {
-            constructor() {
-                this.appState = new AppState();
-                this.priceEngine = new PriceEngine();
-                this.tradingEngine = new TradingEngine(this.appState, this.priceEngine);
-                this.uiManager = new UIManager(this.appState, this.tradingEngine);
-                this.notification = new NotificationSystem();
-                
-                this.initialize();
-            }
-
-            initialize() {
-                this.setupEventListeners();
-                this.restoreSession();
-                this.uiManager.updateDates();
-                
-                // Start price updates
-                window.updatePriceDisplay = () => {
-                    if (!document.getElementById('coinsPage').classList.contains('hidden')) {
-                        this.uiManager.loadCoins();
-                    }
-                };
-                
-                this.notification.info(`${CONFIG.APP_NAME} v${CONFIG.VERSION} loaded successfully`);
-            }
-
-            setupEventListeners() {
-                // Login form
-                const loginForm = document.getElementById('loginForm');
-                if (loginForm) {
-                    loginForm.addEventListener('submit', (e) => this.handleLogin(e));
-                    
-                    // Password visibility toggle
-                    const togglePassword = document.getElementById('togglePassword');
-                    if (togglePassword) {
-                        togglePassword.addEventListener('click', () => {
-                            const passwordInput = document.getElementById('password');
-                            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                            passwordInput.setAttribute('type', type);
-                            togglePassword.classList.toggle('fa-eye');
-                            togglePassword.classList.toggle('fa-eye-slash');
-                        });
-                    }
-                }
-
-                // Logout buttons
-                document.querySelectorAll('[id^="logoutBtn"]').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        this.handleLogout();
-                    });
-                });
-
-                // Swap form
-                const swapForm = document.getElementById('swapForm');
-                if (swapForm) {
-                    swapForm.addEventListener('submit', (e) => this.handleSwap(e));
-                    
-                    // Live estimate updates
-                    const swapInputs = ['swapFromAmount', 'swapFromToken', 'swapToToken'];
-                    swapInputs.forEach(id => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                            element.addEventListener('input', () => this.uiManager.updateSwapEstimate());
-                            element.addEventListener('change', () => this.uiManager.updateSwapEstimate());
-                        }
-                    });
-                }
-
-                // Convert form
-                const convertForm = document.getElementById('convertForm');
-                if (convertForm) {
-                    convertForm.addEventListener('submit', (e) => this.handleConvert(e));
-                    
-                    const convertInputs = ['convertFromAmount', 'convertFromCurrency', 'convertToCurrency'];
-                    convertInputs.forEach(id => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                            element.addEventListener('input', () => this.uiManager.updateConvertEstimate());
-                            element.addEventListener('change', () => this.uiManager.updateConvertEstimate());
-                        }
-                    });
-                }
-
-                // Trade form
-                const tradeForm = document.getElementById('tradeForm');
-                if (tradeForm) {
-                    tradeForm.addEventListener('submit', (e) => this.handleTrade(e));
-                    
-                    // Show/hide limit price input
-                    const orderTypeSelect = document.querySelector('#orderType');
-                    if (orderTypeSelect) {
-                        orderTypeSelect.addEventListener('change', (e) => {
-                            const priceInput = document.querySelector('#limitPrice');
-                            if (priceInput) {
-                                priceInput.parentElement.style.display = 
-                                    e.target.value === 'limit' ? 'block' : 'none';
-                            }
-                        });
-                    }
-                }
-
-                // Wallet connection
-                const connectWalletBtn = document.getElementById('connectWalletBtn');
-                if (connectWalletBtn) {
-                    connectWalletBtn.addEventListener('click', () => this.handleWalletConnect());
-                }
-
-                // Mobile menu
-                const mobileMenu = document.querySelector('.mobile-menu');
-                if (mobileMenu) {
-                    mobileMenu.addEventListener('click', () => {
-                        const navLinks = document.querySelector('.nav-links');
-                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                    });
-                }
-
-                // Forgot password
-                document.querySelectorAll('.forgot-password').forEach(link => {
-                    link.addEventListener('click', () => {
-                        this.notification.info('Password reset instructions have been sent to your email.');
-                    });
-                });
-            }
-
-            restoreSession() {
-                if (this.appState.session.isLoggedIn) {
-                    this.uiManager.showPage('dashboardPage');
-                    this.notification.success(`Welcome back, ${this.appState.getCurrentUser().username}!`);
-                } else {
-                    this.uiManager.showPage('homePage');
-                }
-            }
-
-            // Event handlers
-            async handleLogin(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value.trim();
-                const password = document.getElementById('password').value;
-                const rememberMe = document.querySelector('input[name="remember"]').checked;
-                
-                if (this.appState.login(username, password)) {
-                    this.notification.success('Login successful! Redirecting to dashboard...');
-                    
-                    if (rememberMe) {
-                        localStorage.setItem('rememberedUser', username);
-                    }
-                    
-                    setTimeout(() => {
-                        this.uiManager.showPage('dashboardPage');
-                    }, 1000);
-                } else {
-                    this.notification.error('Invalid username or password. Please try again.');
-                }
-            }
-
-            handleLogout() {
-                this.appState.logout();
-                this.notification.info('You have been logged out successfully.');
-                this.uiManager.showPage('homePage');
-            }
-
-            async handleSwap(e) {
-                e.preventDefault();
-                
-                const fromAmount = parseFloat(document.getElementById('swapFromAmount').value);
-                const fromToken = document.getElementById('swapFromToken').value;
-                const toToken = document.getElementById('swapToToken').value;
-                
-                if (!fromAmount || fromAmount <= 0) {
-                    this.notification.error('Please enter a valid amount');
-                    return;
-                }
-                
-                const result = await this.tradingEngine.swap(fromAmount, fromToken, toToken);
-                if (result.success) {
-                    this.uiManager.updateDashboard();
-                    this.uiManager.updateSwapEstimate();
-                }
-            }
-
-            async handleConvert(e) {
-                e.preventDefault();
-                
-                const amount = parseFloat(document.getElementById('convertFromAmount').value);
-                const fromCurrency = document.getElementById('convertFromCurrency').value;
-                const toCurrency = document.getElementById('convertToCurrency').value;
-                
-                if (!amount || amount <= 0) {
-                    this.notification.error('Please enter a valid amount');
-                    return;
-                }
-                
-                const result = await this.tradingEngine.convert(amount, fromCurrency, toCurrency);
-                if (result.success) {
-                    this.uiManager.updateDashboard();
-                    this.uiManager.updateConvertEstimate();
-                }
-            }
-
-            async handleTrade(e) {
-                e.preventDefault();
-                
-                const orderType = document.getElementById('orderType').value;
-                const asset = document.getElementById('assetPair').value;
-                const side = document.querySelector('input[name="side"]:checked').value;
-                const amount = parseFloat(document.getElementById('tradeAmount').value);
-                const price = document.getElementById('limitPrice')?.value || null;
-                
-                if (!amount || amount <= 0) {
-                    this.notification.error('Please enter a valid amount');
-                    return;
-                }
-                
-                const result = await this.tradingEngine.trade(orderType, asset, side, amount, price);
-                if (result.success) {
-                    this.uiManager.updateDashboard();
-                }
-            }
-
-            async handleWalletConnect() {
-                this.notification.info('Connecting wallet...');
-                
-                // Simulate wallet connection
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                const walletType = document.querySelector('#walletType')?.value || 'metamask';
-                const address = this.generateWalletAddress();
-                
-                // Update UI
-                const addressInput = document.getElementById('walletAddressInput');
-                if (addressInput) {
-                    addressInput.value = address;
-                }
-                
-                this.notification.success(`Wallet connected: ${address.substring(0, 10)}...`);
-                
-                // Add transaction
-                this.appState.addTransaction(
-                    'wallet',
-                    `Connected ${walletType}`,
-                    0,
-                    'completed'
-                );
-                
-                this.uiManager.updateDashboard();
-            }
-
-            generateWalletAddress() {
-                const chars = '0123456789abcdef';
-                let address = '0x';
-                for (let i = 0; i < 40; i++) {
-                    address += chars[Math.floor(Math.random() * chars.length)];
-                }
-                return address;
-            }
-        }
-
-        // Start the application when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            window.app = new Application();
-            
-            // Make some functions globally available for inline event handlers
-            window.showPage = (pageId) => window.app.uiManager.showPage(pageId);
-            window.scrollToSection = (sectionId) => window.app.uiManager.scrollToSection(sectionId);
-        });
-
-        // Add missing Font Awesome icons for coins
-        const style = document.createElement('style');
-        style.textContent = `
-            .fa-btc:before { content: "\\f15a"; }
-            .fa-eth:before { content: "\\f42e"; }
-            .fa-bnb:before { content: "\\f3d5"; }
-            .fa-sol:before { content: "\\f3d7"; }
-            .fa-ada:before { content: "\\f3d6"; }
-            .fa-xrp:before { content: "\\f3d8"; }
-            .fa-dot:before { content: "\\f3d9"; }
-            .fa-doge:before { content: "\\f3da"; }
-        `;
-        document.head.appendChild(style);
+        // Make functions available globally
+        window.showPage = showPage;
+        window.scrollToSection = scrollToSection;
+        window.connectWallet = connectWallet;
+        window.disconnectWallet = disconnectWallet;
+        window.previewSwap = previewSwap;
+        window.confirmSwap = confirmSwap;
+        window.showModal = showModal;
+        window.hideModal = hideModal;
     </script>
 </body>
 </html>
+
